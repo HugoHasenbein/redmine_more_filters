@@ -1,6 +1,6 @@
 # redmine_more_filters
 
-Redmine plugin tp provide necessary filters in queries
+Redmine plugin to provide necessary filters in queries
 
 ### Use case(s)
 
