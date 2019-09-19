@@ -1,0 +1,52 @@
+<%= content_for :header_tags do %>
+
+<script type="text/javascript">
+function toggleOperator(field) {
+  var fieldId = field.replace('.', '_');
+  var operator = $("#operators_" + fieldId);
+  switch (operator.val()) {
+    case "!*":
+    case "*":
+    case "t":
+    case "nd":
+    case "ld":
+    case "w":
+    case "lw":
+    case "nw":
+    case "l2w":
+    case "m":
+    case "lm":
+    case "nm":
+    case "y":
+    case "o":
+    case "c":
+    case "*o":
+    case "!o":
+      enableValues(field, []);
+      break;
+    case "><":
+      enableValues(field, [0,1]);
+      break;
+    case "<t+":
+    case ">t+":
+    case "><t+":
+    case "t+":
+    case ">t-":
+    case "<t-":
+    case "><t-":
+    case "t-":
+      enableValues(field, [2]);
+      break;
+    case "=p":
+    case "=!p":
+    case "!p":
+      enableValues(field, [1]);
+      break;
+    default:
+      enableValues(field, [0]);
+      break;
+  }
+}
+</script>
+
+<% end %>
