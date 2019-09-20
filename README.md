@@ -20,7 +20,6 @@ currently available filters:
 
 |Filter      |Value     |
 |------------|----------|
-
 |begins_with||
 |begins_with_any|   (supply list of whitespace separated words)|
 |not_begins_with||  
