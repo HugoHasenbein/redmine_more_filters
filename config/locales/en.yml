@@ -22,11 +22,27 @@
 en:
   
   label_begins_with: "begins with"
+  label_begins_with_any: "beginnt with any of"
   label_not_begins_with: "does not begin with"
+  label_not_begins_with_any: "does not begin with any of"
   
   label_ends_with: "ends with"
+  label_ends_with_any: "ends with any of"
   label_not_ends_with: "does not end with"
+  label_not_ends_with_any: "does not end with any of"
   
+  label_contains_any: "contains any of"
+  label_not_contains_any: "contains none of"
+  label_contains_all: "contains all of"
+  label_not_contains_all: "contains not all of"
+
   label_tomorrow: "tomorrow"
   label_next_week: "next week"
   label_next_month: "next month"
+
+
+
+
+  
+  
+  

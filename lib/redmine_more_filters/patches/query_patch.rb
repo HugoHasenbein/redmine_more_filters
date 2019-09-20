@@ -31,16 +31,28 @@ module RedmineMoreFilters
           alias_method_chain :sql_for_field, :more_filters
           
           self.operators.merge!(
-            "b"    => :label_begins_with,
-            "!b"   => :label_not_begins_with,
-            "e"    => :label_ends_with,
-            "!e"   => :label_not_ends_with,
-            "nd"   => :label_tomorrow,
-            "nw"   => :label_next_week,
-            "nm"   => :label_next_month
+            "^="    => :label_begins_with,
+            "*^="   => :label_begins_with_any,
+            "!^="   => :label_not_begins_with,
+            "!*^="  => :label_not_begins_with_any,
+            
+            "$="    => :label_ends_with,
+            "*$="   => :label_ends_with_any,
+            "!$="   => :label_not_ends_with,
+            "!*$="  => :label_not_ends_with_any,
+            
+            "*~"    => :label_contains_any,
+            "!*~"   => :label_not_contains_any,
+            "[~]"   => :label_contains_all,
+            "![~]"  => :label_not_contains_all,
+            
+            "nd"    => :label_tomorrow,
+            "nw"    => :label_next_week,
+            "nm"    => :label_next_month
           )
-          self.operators_by_filter_type[:string].insert(1, "b", "!b", "e", "!e")
-          self.operators_by_filter_type[:text].insert(1, "b", "!b", "e", "!e")
+          self.operators_by_filter_type[:string].insert(1, "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
+          self.operators_by_filter_type[:text].insert(1, "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
+          
           self.operators_by_filter_type[:date].insert(14, "nm")
           self.operators_by_filter_type[:date].insert(11, "nw")
           self.operators_by_filter_type[:date].insert(9, "nd")
@@ -80,17 +92,37 @@ module RedmineMoreFilters
         
         def sql_for_field_with_more_filters(field, operator, value, db_table, db_field, is_custom_filter=false)
           sql = case operator
-            when "b"
-              sql = sql_begins_with("#{db_table}.#{db_field}", value.first)
-            when "!b"
-              sql = sql_begins_with("#{db_table}.#{db_field}", value.first, false)
-            when "e"
+          
+            when "^="
+              sql_begins_with("#{db_table}.#{db_field}", value.first)
+            when "*^="
+              value.first.split(" ").select{|s| s.present?}.map{|s| sql_begins_with("#{db_table}.#{db_field}", s)}.join(" OR ")
+            when "!^="
+              sql_begins_with("#{db_table}.#{db_field}", value.first, false)
+            when "!*^="
+              value.first.split(" ").select{|s| s.present?}.map{|s| sql_begins_with("#{db_table}.#{db_field}", s, false)}.join(" AND ")
+              
+            when "$="
               sql = sql_ends_with("#{db_table}.#{db_field}", value.first)
-            when "!e"
-              sql = sql_ends_with("#{db_table}.#{db_field}", value.first, false)
+            when "*$="
+              value.first.split(" ").select{|s| s.present?}.map{|s| sql_ends_with("#{db_table}.#{db_field}", s)}.join(" OR ")
+            when "!$="
+              sql_ends_with("#{db_table}.#{db_field}", value.first, false)
+            when "!*$="
+              value.first.split(" ").select{|s| s.present?}.map{|s| sql_ends_with("#{db_table}.#{db_field}", s, false)}.join(" AND ")
+              
+            when "*~"
+              value.first.split(" ").select{|s| s.present?}.map{|s| sql_contains("#{db_table}.#{db_field}", s)}.join(" OR ")
+            when "!*~"
+              value.first.split(" ").select{|s| s.present?}.map{|s| sql_contains("#{db_table}.#{db_field}", s, false)}.join(" AND ")
+            when "[~]"
+              value.first.split(" ").select{|s| s.present?}.map{|s| sql_contains("#{db_table}.#{db_field}", s)}.join(" AND ")
+            when "![~]"
+              value.first.split(" ").select{|s| s.present?}.map{|s| sql_contains("#{db_table}.#{db_field}", s, false)}.join(" OR ")
+              
             when "nd"
               # = tomorrow
-              sql = relative_date_clause(db_table, db_field, 1, 1, is_custom_filter)
+              relative_date_clause(db_table, db_field, 1, 1, is_custom_filter)
             when "nw"
               # = next week
               first_day_of_week = l(:general_first_day_of_week).to_i

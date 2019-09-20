@@ -22,10 +22,19 @@
 de:
   
   label_begins_with: "beginnt mit"
+  label_begins_with_any: "beginnt mit einem von"
   label_not_begins_with: "beginnt nicht mit"
+  label_not_begins_with_any: "beginnt nicht mit einem von"
   
   label_ends_with: "endet mit"
+  label_ends_with_any: "endet mit einem von"
   label_not_ends_with: "endet nicht mit"
+  label_not_ends_with_any: "endet nicht mit einem von"
+  
+  label_contains_any: "beinhaltet irgendeines von"
+  label_not_contains_any: "beinhaltet keines von"
+  label_contains_all: "beinhaltet alle von"
+  label_not_contains_all: "beinhaltet nicht alle von"
   
   label_tomorrow: "morgen"
   label_next_week: "nächste Woche"
