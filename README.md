@@ -18,7 +18,8 @@ By poular request I added even more filters
 
 currently available filters:
 
-Filter|Value
+|Filter      |Value     |
+|------------|----------|
 
 |begins_with||
 |begins_with_any|   (supply list of whitespace separated words)|
