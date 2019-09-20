@@ -18,7 +18,7 @@ By poular request I added even more filters
 
 currently available filters:
 
-begins_with||
+|begins_with||
 |begins_with_any|   (supply list of whitespace separated words)|
 |not_begins_with||  
 |not_begins_with_any| (supply list of whitespace separated words)|
