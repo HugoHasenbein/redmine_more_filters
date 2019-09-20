@@ -12,6 +12,31 @@ For string and text filters, the plugin adds "begins with", "does not begin with
 
 ![PNG that represents a quick overview](/doc/new_string_and_text_filters.png)
 
+### version 1.1.0
+
+By poular request I added even more filters
+
+currently available filters:
+
+begins_with
+begins_with_any     (supply list of whitespace separated words)
+not_begins_with     
+not_begins_with_any (supply list of whitespace separated words)
+
+ends_with
+ends_with_any       (supply list of whitespace separated words)
+not_ends_with
+not_ends_with_any   (supply list of whitespace separated words)
+
+contains_any        (supply list of whitespace separated words)
+not_contains_any    (supply list of whitespace separated words)
+contains_all        (supply list of whitespace separated words)
+not_contains_all    (supply list of whitespace separated words)
+
+tomorrow
+next_week
+next_month
+
 
 ### Install
 
@@ -43,6 +68,9 @@ Just install and go to issue page and select a date field with future dates, or 
 
 * German
 * English
+
+**1.1.0**
+  - added more text filters by popular request
 
 **1.0.2** 
   - beautified code
