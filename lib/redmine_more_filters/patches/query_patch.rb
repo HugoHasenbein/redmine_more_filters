@@ -28,7 +28,9 @@ module RedmineMoreFilters
         base.class_eval do
           unloadable
           
-          alias_method_chain :sql_for_field, :more_filters
+          alias_method :sql_for_field_without_more_filters, :sql_for_field
+          alias_method :sql_for_field, :sql_for_field_with_more_filters
+          alias_method :more_filters, :sql_for_field
           
           self.operators.merge!(
             "^="    => :label_begins_with,
