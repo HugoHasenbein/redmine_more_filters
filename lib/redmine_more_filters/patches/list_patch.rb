@@ -19,29 +19,32 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 
-en:
-  
-  label_begins_with: "begins with"
-  label_begins_with_any: "beginnt with any of"
-  label_not_begins_with: "does not begin with"
-  label_not_begins_with_any: "does not begin with any of"
-  
-  label_ends_with: "ends with"
-  label_ends_with_any: "ends with any of"
-  label_not_ends_with: "does not end with"
-  label_not_ends_with_any: "does not end with any of"
-  
-  label_contains_any: "contains any of"
-  label_not_contains_any: "contains none of"
-  label_contains_all: "contains all of"
-  label_not_contains_all: "contains not all of"
-  
-  label_any_of: "is one of"
-  label_none_of: "is none of"
-  
-  label_tomorrow: "tomorrow"
-  label_next_week: "next week"
-  label_next_month: "next month"
-  
-  label_is_strict: "is (strict)"
-  label_is_not_strict: "is not (strict)"
+module RedmineMoreFilters
+  module Patches
+    module ListPatch
+      def self.included(base)
+        base.send(:include, InstanceMethods)
+        
+        base.class_eval do
+          unloadable
+          
+          def query_filter_options(custom_field, query)
+            {:type => :list_multiple, :values => lambda { query_filter_values(custom_field, query) }}
+          end
+        
+        end #base
+      end #self
+      
+      module InstanceMethods
+      
+      end
+    end
+  end
+end
+
+unless Redmine::FieldFormat::List.included_modules.include?(RedmineMoreFilters::Patches::ListPatch)
+  Redmine::FieldFormat::List.send(:include, RedmineMoreFilters::Patches::ListPatch)
+end
+
+
+

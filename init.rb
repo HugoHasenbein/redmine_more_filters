@@ -19,13 +19,21 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 
+# 1.1.1
+#       - added one_of and none_of for strings
+# 1.2.0
+#       - added AND for Date/Value custom fields
+# 1.2.1 
+#       - made AND for Date/Value custom fields more strict
+# 1.2.2
+#       - changed list custom field from :list_optional to new type :list_multiple
 require 'redmine'
 
 Redmine::Plugin.register :redmine_more_filters do
   name 'Redmine More Filters'
   author 'Stephan Wenzel'
   description 'Plugin to add necessary filters to queries'
-  version '1.1.0'
+  version '1.2.2'
   url 'https://github.com/HugoHasenbein/redmine_more_filters'
   author_url 'https://github.com/HugoHasenbein/redmine_more_filters'
 

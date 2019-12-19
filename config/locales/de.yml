@@ -36,6 +36,12 @@ de:
   label_contains_all: "beinhaltet alle von"
   label_not_contains_all: "beinhaltet nicht alle von"
   
+  label_any_of: "ist eines von"
+  label_none_of: "ist keines von"
+  
   label_tomorrow: "morgen"
   label_next_week: "nächste Woche"
   label_next_month: "nächster Monat"
+  
+  label_is_strict: "ist (exakt)"
+  label_is_not_strict: "ist nicht (exakt)"
