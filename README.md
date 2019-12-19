@@ -74,7 +74,7 @@ Just install and go to issue page and select a date field with future dates, or 
 * English
 
 **1.2.2**
-  - added strict "is" and "is not" filter for custom fields (like boolean "AND") in addition to "is" and "is not" (basically acting like boolean "OR")
+  - added strict "is" and "is not" filter for list custom fields having mutiple values (like boolean "AND") in addition to "is" and "is not" (basically acting like boolean "OR")
 
 **1.1.0**
   - added more text filters by popular request
