@@ -19,7 +19,7 @@ By poular request I added even more filters
 currently available filters:
 
 |Type    |Filter      |Value     |
-|---––––-|------------|----------|
+|---|---|---|
 |String  |begins_with||
 |        |begins_with_any|   (supply list of whitespace separated words)|
 |        |not_begins_with||  
@@ -39,7 +39,7 @@ currently available filters:
 |        |next_week||
 |        |next_month||
 |List Custom Field (Multiple Values)|is (strict)| (select values in list)|
-|List Custom Field (Multiple Values)|is not (strict)| s(elect values in list)|
+|        |is not (strict)| (select values in list)|
 
 
 ### Install
