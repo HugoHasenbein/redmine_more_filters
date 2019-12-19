@@ -18,28 +18,28 @@ By poular request I added even more filters
 
 currently available filters:
 
-|Type|Filter      |Value     |
+|Type    |Filter      |Value     |
 |---––––-|------------|----------|
-|String|begins_with||
-||begins_with_any|   (supply list of whitespace separated words)|
-||not_begins_with||  
-||not_begins_with_any| (supply list of whitespace separated words)|
-||||
-||ends_with||
-||ends_with_any|       (supply list of whitespace separated words)|
-||not_ends_with||
-||not_ends_with_any|   (supply list of whitespace separated words)|
-||||
-||contains_any|        (supply list of whitespace separated words)|
-||not_contains_any|    (supply list of whitespace separated words)|
-||contains_all|        (supply list of whitespace separated words)|
-||not_contains_all|    (supply list of whitespace separated words)|
-||||
-|Date|tomorrow||
-|Date|next_week||
-|Date|next_month||
-|List Custom Field (Multiple Values)|is (strict)|
-|List Custom Field (Multiple Values)|is not (strict)|
+|String  |begins_with||
+|        |begins_with_any|   (supply list of whitespace separated words)|
+|        |not_begins_with||  
+|        |not_begins_with_any| (supply list of whitespace separated words)|
+|        |||
+|        |ends_with||
+|        |ends_with_any|       (supply list of whitespace separated words)|
+|        |not_ends_with||
+|        |not_ends_with_any|   (supply list of whitespace separated words)|
+|        |||
+|        |contains_any|        (supply list of whitespace separated words)|
+|        |not_contains_any|    (supply list of whitespace separated words)|
+|        |contains_all|        (supply list of whitespace separated words)|
+|        |not_contains_all|    (supply list of whitespace separated words)|
+|        |||
+|Date    |tomorrow||
+|        |next_week||
+|        |next_month||
+|List Custom Field (Multiple Values)|is (strict)| (select values in list)|
+|List Custom Field (Multiple Values)|is not (strict)| s(elect values in list)|
 
 
 ### Install
