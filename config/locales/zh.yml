@@ -19,29 +19,27 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 
-en:
+zh:
   
-  label_begins_with: "begins with"
-  label_begins_with_any: "beginnt with any of"
-  label_not_begins_with: "does not begin with"
-  label_not_begins_with_any: "does not begin with any of"
+  label_begins_with: "以某文本开头"
+  label_begins_with_any: "以任一文本开头的"
+  label_not_begins_with: "不是以某文本开头的"
+  label_not_begins_with_any: "不以以下文本开头的"
   
-  label_ends_with: "ends with"
-  label_ends_with_any: "ends with any of"
-  label_not_ends_with: "does not end with"
-  label_not_ends_with_any: "does not end with any of"
+  label_ends_with: "以某文本结尾"
+  label_ends_with_any: "以任一文本结尾的"
+  label_not_ends_with: "不是以某文本结尾的"
+  label_not_ends_with_any: "不以以下文本结尾的"
   
-  label_contains_any: "contains any of"
-  label_not_contains_any: "contains none of"
-  label_contains_all: "contains all of"
-  label_not_contains_all: "contains not all of"
-  
-  label_any_of: "is one of"
-  label_none_of: "is none of"
-  
-  label_tomorrow: "tomorrow"
-  label_next_week: "next week"
-  label_next_month: "next month"
+  label_contains_any: "包含任一文本的"
+  label_not_contains_any: "不包含以下全部文本的"
+  label_contains_all: "包含以下全部文本的"
+  label_not_contains_all: "不包含以下任一文本的"
+
+  label_tomorrow: "明天"
+  label_next_week: "下周"
+  label_next_month: "下个月"
   
   label_is_strict: "is (strict)"
   label_is_not_strict: "is not (strict)"
+

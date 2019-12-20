@@ -20,4 +20,5 @@
 #
 
 require 'redmine_more_filters/patches/query_patch'
+require 'redmine_more_filters/patches/list_patch'
 require 'redmine_more_filters/hooks/header_hook'
