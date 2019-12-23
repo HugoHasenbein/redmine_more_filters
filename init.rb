@@ -27,13 +27,16 @@
 #       - made AND for Date/Value custom fields more strict
 # 1.2.2
 #       - changed list custom field from :list_optional to new type :list_multiple
+# 1.2.3
+#       - added contains all and does not contain all for list_multiple
+#
 require 'redmine'
 
 Redmine::Plugin.register :redmine_more_filters do
   name 'Redmine More Filters'
   author 'Stephan Wenzel'
   description 'Plugin to add necessary filters to queries'
-  version '1.2.2'
+  version '1.2.3'
   url 'https://github.com/HugoHasenbein/redmine_more_filters'
   author_url 'https://github.com/HugoHasenbein/redmine_more_filters'
 
