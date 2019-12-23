@@ -59,14 +59,15 @@ module RedmineMoreFilters
             "nw"    => :label_next_week,
             "nm"    => :label_next_month
           )
-          self.operators_by_filter_type[:string].insert(1, "*=", "!*=", "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
-          self.operators_by_filter_type[:text].insert(1, "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
-          
-          self.operators_by_filter_type[:date].insert(14, "nm")
-          self.operators_by_filter_type[:date].insert(11, "nw")
-          self.operators_by_filter_type[:date].insert( 9, "nd")
-          
-          self.operators_by_filter_type[:list_multiple] = [ "=", "==", "!", "!!", "!*", "*" ]
+        
+        self.operators_by_filter_type[:string].insert(1, "*=", "!*=", "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
+        self.operators_by_filter_type[:text].insert(1, "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
+        
+        self.operators_by_filter_type[:date].insert(14, "nm")
+        self.operators_by_filter_type[:date].insert(11, "nw")
+        self.operators_by_filter_type[:date].insert( 9, "nd")
+        
+        self.operators_by_filter_type[:list_multiple] = [ "=", "==", "[~]", "!", "!!", "![~]", "!*", "*" ]
           
         def validate_query_filters
           filters.each_key do |field|
@@ -235,6 +236,18 @@ module RedmineMoreFilters
                   end
                   filters_clauses << fc.join(' AND ')
                   filters_clauses << (" NOT " + sql_for_custom_field(field, "!!", v, $1))
+                when "[~]"
+                  fc = []
+                  v.each do |sv|
+                    fc << sql_for_custom_field(field, "=", [sv], $1)
+                  end
+                  filters_clauses << fc.join(' AND ')
+                when "![~]"
+                  fc = []
+                  v.each do |sv|
+                    fc << sql_for_custom_field(field, "=", [sv], $1)
+                  end
+                  filters_clauses << (" NOT (" + fc.join(' AND ') + ")")
                 when "!!"
                   fc = []
                   v.each do |sv|
