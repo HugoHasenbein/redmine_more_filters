@@ -39,7 +39,9 @@ currently available filters:
 |        |next_week||
 |        |next_month||
 |List Custom Field (Multiple Values)|is (strict)| (select values in list)|
+|        |contains all|  (select values in list)|
 |        |is not (strict)| (select values in list)|
+|        |not contains all| (select values in list)|
 
 
 ### Install
