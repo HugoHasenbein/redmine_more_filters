@@ -75,6 +75,9 @@ Just install and go to issue page and select a date field with future dates, or 
 * German
 * English
 
+**1.2.3**
+  - added "contains all" and "not contains all"  for list custom fields having mutiple values
+  
 **1.2.2**
   - added strict "is" and "is not" filter for list custom fields having mutiple values (basically acting like boolean "AND") in addition to "is" and "is not" (basically acting like boolean "OR")
 
