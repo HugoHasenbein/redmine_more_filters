@@ -18,26 +18,28 @@ By poular request I added even more filters
 
 currently available filters:
 
-|Filter      |Value     |
-|------------|----------|
-|begins_with||
-|begins_with_any|   (supply list of whitespace separated words)|
-|not_begins_with||  
-|not_begins_with_any| (supply list of whitespace separated words)|
-|||
-|ends_with||
-|ends_with_any|       (supply list of whitespace separated words)|
-|not_ends_with||
-|not_ends_with_any|   (supply list of whitespace separated words)|
-|||
-|contains_any|        (supply list of whitespace separated words)|
-|not_contains_any|    (supply list of whitespace separated words)|
-|contains_all|        (supply list of whitespace separated words)|
-|not_contains_all|    (supply list of whitespace separated words)|
-|||
-|tomorrow||
-|next_week||
-|next_month||
+|Type    |Filter      |Value     |
+|---|---|---|
+|String  |begins_with||
+|        |begins_with_any|   (supply list of whitespace separated words)|
+|        |not_begins_with||  
+|        |not_begins_with_any| (supply list of whitespace separated words)|
+|        |||
+|        |ends_with||
+|        |ends_with_any|       (supply list of whitespace separated words)|
+|        |not_ends_with||
+|        |not_ends_with_any|   (supply list of whitespace separated words)|
+|        |||
+|        |contains_any|        (supply list of whitespace separated words)|
+|        |not_contains_any|    (supply list of whitespace separated words)|
+|        |contains_all|        (supply list of whitespace separated words)|
+|        |not_contains_all|    (supply list of whitespace separated words)|
+|        |||
+|Date    |tomorrow||
+|        |next_week||
+|        |next_month||
+|List Custom Field (Multiple Values)|is (strict)| (select values in list)|
+|        |is not (strict)| (select values in list)|
 
 
 ### Install
@@ -70,6 +72,9 @@ Just install and go to issue page and select a date field with future dates, or 
 
 * German
 * English
+
+**1.2.2**
+  - added strict "is" and "is not" filter for list custom fields having mutiple values (basically acting like boolean "AND") in addition to "is" and "is not" (basically acting like boolean "OR")
 
 **1.1.0**
   - added more text filters by popular request
