@@ -28,9 +28,21 @@ module RedmineMoreFilters
         base.class_eval do
           unloadable
           
-          alias_method_chain :sql_for_field, :more_filters
-          alias_method_chain :sql_for_custom_field, :more_filters
-          alias_method_chain :statement, :more_filters
+          if Rails::VERSION::MAJOR < 5
+            alias_method_chain :sql_for_field, :more_filters
+            alias_method_chain :sql_for_custom_field, :more_filters
+            alias_method_chain :statement, :more_filters
+            
+          else # Rails 5+
+            alias_method :sql_for_field_without_more_filters, :sql_for_field
+            alias_method :sql_for_field, :sql_for_field_with_more_filters
+            
+            alias_method :sql_for_custom_field_without_more_filters, :sql_for_field
+            alias_method :sql_for_field, :sql_for_custom_field_with_more_filters
+            
+            alias_method :statement_without_more_filters, :statement
+            alias_method :statement, :statement_with_more_filters
+          end
           
           self.operators.merge!(
           

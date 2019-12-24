@@ -29,6 +29,8 @@
 #       - changed list custom field from :list_optional to new type :list_multiple
 # 1.2.3
 #       - added contains all and does not contain all for list_multiple
+# 1.3.0
+#       - added Rails 5 support
 #
 require 'redmine'
 
