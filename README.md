@@ -35,6 +35,7 @@ currently available filters:
 |        |contains_all|        (supply list of whitespace separated words)|
 |        |not_contains_all|    (supply list of whitespace separated words)|
 |        |||
+|Integer ||allow any separator other than '+' or '-' between two integers|
 |Date    |tomorrow||
 |        |next_week||
 |        |next_month||
@@ -74,6 +75,12 @@ Just install and go to issue page and select a date field with future dates, or 
 
 * German
 * English
+
+**1.3.1**
+  - added support for arbitrary separators for integer (like ID) "=", like 123;456 789
+
+**1.3.0** 
+  - added Rails 5 support
 
 **1.2.3**
   - added "contains all" and "not contains all"  for list custom fields having mutiple values
