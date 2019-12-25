@@ -31,14 +31,16 @@
 #       - added contains all and does not contain all for list_multiple
 # 1.3.0
 #       - added Rails 5 support
-#
+# 1.3.1
+#       - added support for arbitrary separators for id field
+
 require 'redmine'
 
 Redmine::Plugin.register :redmine_more_filters do
   name 'Redmine More Filters'
   author 'Stephan Wenzel'
   description 'Plugin to add necessary filters to queries'
-  version '1.2.3'
+  version '1.3.1'
   url 'https://github.com/HugoHasenbein/redmine_more_filters'
   author_url 'https://github.com/HugoHasenbein/redmine_more_filters'
 

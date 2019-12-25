@@ -37,8 +37,8 @@ module RedmineMoreFilters
             alias_method :sql_for_field_without_more_filters, :sql_for_field
             alias_method :sql_for_field, :sql_for_field_with_more_filters
             
-            alias_method :sql_for_custom_field_without_more_filters, :sql_for_custom_field
-            alias_method :sql_for_custom_field, :sql_for_custom_field_with_more_filters
+            alias_method :sql_for_custom_field_without_more_filters, :sql_for_field
+            alias_method :sql_for_field, :sql_for_custom_field_with_more_filters
             
             alias_method :statement_without_more_filters, :statement
             alias_method :statement, :statement_with_more_filters
@@ -86,7 +86,7 @@ module RedmineMoreFilters
             if values_for(field)
               case type_for(field)
               when :integer
-                add_filter_error(field, :invalid) if values_for(field).detect {|v| v.present? && !v.match(/\A[+-]?\d+(,[+-]?\d+)*\z/) }
+                add_filter_error(field, :invalid) if values_for(field).detect {|v| v.present? && !v.match(/\A[+-]?\d+(\D*?[+-]?\d+)*\z/) }
               when :float
                 add_filter_error(field, :invalid) if values_for(field).detect {|v| v.present? && !v.match(/\A[+-]?\d+(\.\d*)?\z/) }
               when :date, :date_past
