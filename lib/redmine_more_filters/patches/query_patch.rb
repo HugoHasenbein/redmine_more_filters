@@ -86,7 +86,12 @@ module RedmineMoreFilters
             if values_for(field)
               case type_for(field)
               when :integer
-                add_filter_error(field, :invalid) if values_for(field).detect {|v| v.present? && !v.match(/\A[+-]?\d+(,[+-]?\d+)*\z/) }
+                case operator_for(field)
+                when "="
+                  add_filter_error(field, :invalid) if values_for(field).detect {|v| v.present? && !v.match(/\A[+-]?\d+(\D*\d+)*\z/) }
+                else
+                  add_filter_error(field, :invalid) if values_for(field).detect {|v| v.present? && !v.match(/\A[+-]?\d+(,[+-]?\d+)*\z/) }
+                end
               when :float
                 add_filter_error(field, :invalid) if values_for(field).detect {|v| v.present? && !v.match(/\A[+-]?\d+(\.\d*)?\z/) }
               when :date, :date_past
