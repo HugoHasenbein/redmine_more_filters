@@ -116,7 +116,14 @@ module RedmineMoreFilters
         
         def sql_for_field_with_more_filters(field, operator, value, db_table, db_field, is_custom_filter=false)
           sql = case operator
-          
+            when "!*"
+              s = "#{db_table}.#{db_field} IS NULL"
+              s << " OR RTRIM(#{db_table}.#{db_field}) = ''" if (is_custom_filter || [:text, :string].include?(type_for(field)))
+              s
+            when "*"
+              s = "#{db_table}.#{db_field} IS NOT NULL"
+              s << " AND RTRIM(#{db_table}.#{db_field}) <> ''" if (is_custom_filter || [:text, :string].include?(type_for(field)))
+              s
             when "^="
               sql_begins_with("#{db_table}.#{db_field}", value.first)
             when "*^="
@@ -244,33 +251,33 @@ module RedmineMoreFilters
                 when "=="
                   fc = []
                   v.each do |sv|
-                    fc << sql_for_custom_field(field, "=", [sv], $1)
+                    fc << sql_for_custom_field_with_more_filters(field, "=", [sv], $1)
                   end
                   filters_clauses << fc.join(' AND ')
-                  filters_clauses << (" NOT " + sql_for_custom_field(field, "!!", v, $1))
+                  filters_clauses << (" NOT " + sql_for_custom_field_with_more_filters(field, "!!", v, $1))
                 when "[~]"
                   fc = []
                   v.each do |sv|
-                    fc << sql_for_custom_field(field, "=", [sv], $1)
+                    fc << sql_for_custom_field_with_more_filters(field, "=", [sv], $1)
                   end
                   filters_clauses << fc.join(' AND ')
                 when "![~]"
                   fc = []
                   v.each do |sv|
-                    fc << sql_for_custom_field(field, "=", [sv], $1)
+                    fc << sql_for_custom_field_with_more_filters(field, "=", [sv], $1)
                   end
                   filters_clauses << (" NOT (" + fc.join(' AND ') + ")")
                 when "!!"
                   fc = []
                   v.each do |sv|
-                    fc << sql_for_custom_field(field, "=", [sv], $1)
+                    fc << sql_for_custom_field_with_more_filters(field, "=", [sv], $1)
                   end
-                  filters_clauses << (" NOT (" + fc.join(' AND ') + " AND NOT " + sql_for_custom_field(field, "!!", v, $1) + ")")
+                  filters_clauses << (" NOT (" + fc.join(' AND ') + " AND NOT " + sql_for_custom_field_with_more_filters(field, "!!", v, $1) + ")")
                 else
-                  filters_clauses << sql_for_custom_field(field, operator, v, $1)
+                  filters_clauses << sql_for_custom_field_with_more_filters(field, operator, v, $1)
                 end
               else
-                filters_clauses << sql_for_custom_field(field, operator, v, $1)
+                filters_clauses << sql_for_custom_field_with_more_filters(field, operator, v, $1)
               end
             elsif field =~ /^cf_(\d+)\.(.+)$/
               filters_clauses << sql_for_custom_field_attribute(field, operator, v, $1, $2)
@@ -279,7 +286,7 @@ module RedmineMoreFilters
               filters_clauses << send(method, field, operator, v)
             else
               # regular field
-              filters_clauses << '(' + sql_for_field(field, operator, v, queried_table_name, field) + ')'
+              filters_clauses << ('(' + sql_for_field_with_more_filters(field, operator, v, queried_table_name, field) + ')')
             end
           end if filters and valid?
       

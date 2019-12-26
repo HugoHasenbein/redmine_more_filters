@@ -33,6 +33,8 @@
 #       - added Rails 5 support
 # 1.3.1
 #       - added support for arbitrary separators for id field
+# 1.3.2
+#       - modified "all" filter for text and string to not match empty / whitespace values
 
 require 'redmine'
 
