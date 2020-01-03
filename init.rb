@@ -35,6 +35,8 @@
 #       - added support for arbitrary separators for id field
 # 1.3.2
 #       - modified "all" filter for text and string to not match empty / whitespace values
+# 1.3.3
+#       - bugfix: sql_for_custom_field aliases for Rails 5+
 
 require 'redmine'
 
@@ -42,7 +44,7 @@ Redmine::Plugin.register :redmine_more_filters do
   name 'Redmine More Filters'
   author 'Stephan Wenzel'
   description 'Plugin to add necessary filters to queries'
-  version '1.3.1'
+  version '1.3.3'
   url 'https://github.com/HugoHasenbein/redmine_more_filters'
   author_url 'https://github.com/HugoHasenbein/redmine_more_filters'
 

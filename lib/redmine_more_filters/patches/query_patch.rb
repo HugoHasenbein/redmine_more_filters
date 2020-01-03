@@ -37,8 +37,8 @@ module RedmineMoreFilters
             alias_method :sql_for_field_without_more_filters, :sql_for_field
             alias_method :sql_for_field, :sql_for_field_with_more_filters
             
-            alias_method :sql_for_custom_field_without_more_filters, :sql_for_field
-            alias_method :sql_for_field, :sql_for_custom_field_with_more_filters
+            alias_method :sql_for_custom_field_without_more_filters, :sql_for_custom_field
+            alias_method :sql_for_custom_field, :sql_for_custom_field_with_more_filters
             
             alias_method :statement_without_more_filters, :statement
             alias_method :statement, :statement_with_more_filters
