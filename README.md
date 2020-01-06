@@ -75,6 +75,7 @@ Just install and go to issue page and select a date field with future dates, or 
 
 * German
 * English
+* Chinese
 
 **1.3.1**
   - added support for arbitrary separators for integer (like ID) "=", like 123;456 789
