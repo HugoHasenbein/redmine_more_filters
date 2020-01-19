@@ -63,7 +63,7 @@ Be aware that switching time zones may give surprising results with respect to g
 
 In Administration->Info you find the configured default timezones for the database, for Rails ActiveRecord and for Redmine. If you run in problems, please check here first.
 
-This plugin has been tested with posstgres. MySQl should run. It also should run on SQLServer, but it has not been tested. Please be aware, that timezone support varies extremely between different databases.
+This plugin has been tested with posstgres. MySQL should run. It also should run on SQLServer, but it has not been tested. Please be aware, that timezone support varies extremely between different databases.
 
 #### PostgrSQL
 
