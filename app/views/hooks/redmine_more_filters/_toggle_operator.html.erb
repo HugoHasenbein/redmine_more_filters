@@ -66,6 +66,21 @@ function buildFilterRow(field, operator, values) {
     $('#values_'+fieldId+'_2').val(values[1]).datepickerFallback(datepickerOptions);
     $('#values_'+fieldId).val(values[0]);
     break;
+  case "time_past":
+    tr.find('td.values').append(
+      '<span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'_1" size="3" class="value" /> '+labelHourPlural+'</span>' +
+      ' <span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'_2" size="3" class="value" /> '+labelHourPlural+'</span>' +
+      ' <span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'" size="3" class="value" /> '+labelHourPlural+'</span>' +
+      ' <span style="display:none;"><input type="time" name="v['+field+'][]" id="values_'+fieldId+'_3" size="10" class="value" /> '+labelClockTime+'</span>' +
+      ' <span style="display:none;"><input type="time" name="v['+field+'][]" id="values_'+fieldId+'_4" size="10" class="value" /> '+labelClockTime+'</span>'
+      
+    );
+    $('#values_'+fieldId+'_1').val(values[0]);
+    $('#values_'+fieldId+'_2').val(values[1]);
+    $('#values_'+fieldId).val(values[0]);
+    $('#values_'+fieldId+'_3').val(values[0]);
+    $('#values_'+fieldId+'_4').val(values[1]);
+    break;
   case "string":
   case "text":
     tr.find('td.values').append(
@@ -124,10 +139,18 @@ function toggleOperator(field) {
     case "c":
     case "*o":
     case "!o":
+    case "<<":
+    case ">>":
+    case "<<t":
+    case "t>>":
       enableValues(field, []);
       break;
     case "><":
+    case "><h-":
       enableValues(field, [0,1]);
+      break;
+    case "><h":
+      enableValues(field, [3,4]);
       break;
     case "<t+":
     case ">t+":
@@ -137,6 +160,8 @@ function toggleOperator(field) {
     case "<t-":
     case "><t-":
     case "t-":
+    case ">h-":
+    case "<h-":
       enableValues(field, [2]);
       break;
     case "=p":

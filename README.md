@@ -21,7 +21,7 @@ currently available filters:
 |Type    |Filter      |Value     |
 |---|---|---|
 |String  |begins_with||
-|        |begins_with_any|   (supply list of whitespace separated words)|
+|        |begins_with_any|    (supply list of whitespace separated words)|
 |        |not_begins_with||  
 |        |not_begins_with_any| (supply list of whitespace separated words)|
 |        |||
@@ -43,6 +43,41 @@ currently available filters:
 |        |contains all|  (select values in list)|
 |        |is not (strict)| (select values in list)|
 |        |not contains all| (select values in list)|
+|Time    |less than hours ago|input number of hours|
+|        |more than hours ago|input number of hours|
+|        |between ago|input numbers of hours (start-end)|
+|        |between|input clock times (start-end)|
+|        |passed||
+
+The new Time filters work on the issue fields "Created On" and "Updated On". 
+The "passed" filter is very much alike the existing date filter "<=" and toda'y date. However, this filter can be saved without having to update today's date. Further, it will find issues having a creation time or update time only one second ago.
+The between filter filters irrespectively of the date. If you want to filter today's date you can add the exsting filter "Updated" or "Created" today.
+By grouping by the hour (local time aware, local daylight savings aware) you can easily identify the "productive" hour and the blue hour of your team. You can also filter last hour's issue, if Redmine is used in a call center.
+Be aware that switching time zones may give surprising results with respect to grouping. Daylight savings transistions occur at different times in different countries. The grouping is local time aware and groups issues by the creation ort update hour of the day.
+
+In Administration->Info you find the configured default timezones for the database, for Rails ActiveRecord and for Redmine. If you run in problems, please check here first.
+
+This plugin has been tested with posstgres. MySQl should run. It also should run on SQLServer, but it has not been tested. Please be aware, that timezone support varies exteremely betwee different databases.
+
+#### PostgrSQL
+
+Timezone support is built in
+
+#### MySQL
+
+Need to load the time zone tables first f.i. from the commandline outside of mysql
+
+`mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql -u root -p`
+
+#### SQLServer
+
+Thereis only little support for timezones in SQLServer
+
+There is a persistently loadable SQL function available
+
+  https://github.com/mj1856/SqlServerTimeZoneSupport
+
+You MUST install this SQLServer function to your database for this plugin to work with timezone grouping 
 
 
 ### Install
@@ -76,6 +111,11 @@ Just install and go to issue page and select a date field with future dates, or 
 * German
 * English
 * Chinese
+
+**1.4.0**
+  - added more time filters
+  - time filters supported for postgres (tested), MySQL (untested) and SQLServer (untested)
+  - added database timezone info in Administration->Info
 
 **1.3.1**
   - added support for arbitrary separators for integer (like ID) "=", like 123;456 789

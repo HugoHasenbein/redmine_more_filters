@@ -21,28 +21,33 @@
 
 module RedmineMoreFilters
   module Patches
-    module ListPatch
+    module UserPatch
       def self.included(base)
         base.send(:include, InstanceMethods)
         
         base.class_eval do
           unloadable
           
-          def query_filter_options(custom_field, query)
-            {:type => :list_multiple, :values => lambda { query_filter_values(custom_field, query) }}
+          def time_zone_or_default_identifier
+            return time_zone.tzinfo.canonical_identifier if time_zone
+            if RedmineApp::Application.config.time_zone && ActiveSupport::TimeZone[RedmineApp::Application.config.time_zone]
+              return ActiveSupport::TimeZone[RedmineApp::Application.config.time_zone].tzinfo.canonical_identifier 
+            end
+            return "Etc/UTC"
           end
-        
+          
         end #base
       end #self
       
       module InstanceMethods
-      end
-    end
-  end
-end
+      end #module
+      
+    end #module
+  end #module
+end #module
 
-unless Redmine::FieldFormat::List.included_modules.include?(RedmineMoreFilters::Patches::ListPatch)
-  Redmine::FieldFormat::List.send(:include, RedmineMoreFilters::Patches::ListPatch)
+unless User.included_modules.include?(RedmineMoreFilters::Patches::UserPatch)
+  User.send(:include, RedmineMoreFilters::Patches::UserPatch)
 end
 
 

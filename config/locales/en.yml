@@ -2,7 +2,7 @@
 #
 # Redmine plugin to add necessary filters to queries
 #
-# Copyright © 2019 Stephan Wenzel <stephan.wenzel@drwpatent.de>
+# Copyright © 2019-2020 Stephan Wenzel <stephan.wenzel@drwpatent.de>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -45,3 +45,17 @@ en:
   
   label_is_strict: "is (strict)"
   label_is_not_strict: "is not (strict)"
+  
+  label_past: "passed"
+  label_future: "forthcoming"
+  
+  label_time: "time"
+  label_hour_plural: "hours"
+  label_between_ago: "between ago"
+  label_less_than_hours_ago: "less than hours ago"
+  label_more_than_hours_ago: "less than hours ago"
+  label_o_clock: "o'clock"
+  
+  field_created_on_by_clock_time: "Created (Time of Day)"
+  field_updated_on_by_clock_time: "Updated (Time of Day)"
+

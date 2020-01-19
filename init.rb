@@ -2,7 +2,7 @@
 #
 # Redmine plugin to add necessary filters to queries
 #
-# Copyright © 2019 Stephan Wenzel <stephan.wenzel@drwpatent.de>
+# Copyright © 2019-2020 Stephan Wenzel <stephan.wenzel@drwpatent.de>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -18,7 +18,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-
 # 1.1.1
 #       - added one_of and none_of for strings
 # 1.2.0
@@ -37,14 +36,29 @@
 #       - modified "all" filter for text and string to not match empty / whitespace values
 # 1.3.3
 #       - bugfix: sql_for_custom_field aliases for Rails 5+
-
+# 1.3.4
+#       - bugfix: sql_for_custom_field crashed when used with certain other plugins
+# 1.4.0
+#       - support for local time (irrespectively of date) searches (supporting daylight savings)
+#         to use with
+#         
+#           postgres: 
+#                  timezone support is built in
+#               
+#           mysql: you need to load the time zone tables first f.i. with
+#                  `mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql -u root -p`
+#                  
+#           sqlserver:
+#                  you must install https://github.com/mj1856/SqlServerTimeZoneSupport
+#                  to your database for this plugin to work. 
+#
 require 'redmine'
 
 Redmine::Plugin.register :redmine_more_filters do
   name 'Redmine More Filters'
   author 'Stephan Wenzel'
   description 'Plugin to add necessary filters to queries'
-  version '1.3.3'
+  version '1.4.0'
   url 'https://github.com/HugoHasenbein/redmine_more_filters'
   author_url 'https://github.com/HugoHasenbein/redmine_more_filters'
 

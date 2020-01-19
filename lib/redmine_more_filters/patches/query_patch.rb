@@ -2,7 +2,7 @@
 #
 # Redmine plugin to add necessary filters to queries
 #
-# Copyright © 2019 Stephan Wenzel <stephan.wenzel@drwpatent.de>
+# Copyright © 2019-2020 Stephan Wenzel <stephan.wenzel@drwpatent.de>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -69,7 +69,19 @@ module RedmineMoreFilters
             
             "nd"    => :label_tomorrow,
             "nw"    => :label_next_week,
-            "nm"    => :label_next_month
+            "nm"    => :label_next_month,
+            
+            "<<"    => :label_past,
+            ">>"    => :label_future,
+            
+            ">h-"    => :label_less_than_hours_ago,
+            "<h-"    => :label_more_than_hours_ago,
+            "><h-"   => :label_between_ago,
+            "><h"    => :label_between,
+            
+            "<<t"    => :label_past,
+            "t>>"    => :label_future
+            
           )
         
         self.operators_by_filter_type[:string].insert(1, "*=", "!*=", "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
@@ -78,6 +90,12 @@ module RedmineMoreFilters
         self.operators_by_filter_type[:date].insert(14, "nm")
         self.operators_by_filter_type[:date].insert(11, "nw")
         self.operators_by_filter_type[:date].insert( 9, "nd")
+        self.operators_by_filter_type[:date].insert( 9, ">>")
+        self.operators_by_filter_type[:date].insert( 8, "<<")
+        
+        self.operators_by_filter_type[:date_past].insert( 8, "<<")
+        
+        self.operators_by_filter_type[:time_past] = [ ">h-", "<h-", "><h-", "<<t", "!*", "*", "><h" ]
         
         self.operators_by_filter_type[:list_multiple] = [ "=", "==", "[~]", "!", "!!", "![~]", "!*", "*" ]
           
@@ -98,21 +116,35 @@ module RedmineMoreFilters
                 when ">t-", "<t-", "t-", ">t+", "<t+", "t+", "><t+", "><t-"
                   add_filter_error(field, :invalid) if values_for(field).detect {|v| v.present? && !v.match(/^\d+$/) }
                 end
+              when :time_past
+                case operator_for(field)
+                when ">h-", "<h-", "><h-", "><h-", "><h+"
+                  add_filter_error(field, :invalid) if values_for(field).detect {|v| v.present? && !v.match(/^\d+$/) }
+                when "><h"
+                  add_filter_error(field, :invalid) if values_for(field).detect {|v| 
+                    v.present? && (!v.match(/^\d{2}:\d{2}(:\d{2})?$/) || parse_time(v).nil?) 
+                  }
+                end
               end
             end
             add_filter_error(field, :blank) unless
                 # filter requires one or more values
                 (values_for(field) and !values_for(field).first.blank?) or
                 # filter doesn't require any value
-                ["o", "c", "!*", "*", "t", "ld", "nd", "w", "lw", "nw", "l2w", "m", "lm", "nm", "y", "*o", "!o"].include? operator_for(field)
+                ["o", "c", "!*", "*", "t", "ld", "nd", "<<", ">>", "<<t", "t>>", "w", "lw", "nw", "l2w", "m", "lm", "nm", "y", "*o", "!o"].include? operator_for(field)
           end if filters
-        end
+        end #def
+        
+        # Returns Time from the given filter value
+        def parse_time(arg)
+          Time.parse(arg) rescue nil
+        end #def
+        
         
         end #base
       end #self
       
       module InstanceMethods
-      
         
         def sql_for_field_with_more_filters(field, operator, value, db_table, db_field, is_custom_filter=false)
           sql = case operator
@@ -157,6 +189,27 @@ module RedmineMoreFilters
             when "![~]"
               value.first.split(" ").select{|s| s.present?}.map{|s| sql_contains("#{db_table}.#{db_field}", s, false)}.join(" OR ")
               
+            when "<<t"
+              relative_time_clause(db_table, db_field, nil, nil, 0, nil)
+            when "t>>"
+              relative_time_clause(db_table, db_field, 0, nil, nil, nil)
+              
+            when ">h-"
+              relative_time_clause(db_table, db_field, value.first.to_i * (-1), "hour", nil, nil)
+            when "<h-"
+              relative_time_clause(db_table, db_field, nil, nil, value.first.to_i * (-1), "hour")
+            when "><h-"
+              relative_time_clause(db_table, db_field, - value[1].to_i, "hour", - value[0].to_i, "hour")
+            when "><h+"
+              relative_time_clause(db_table, db_field, value[1].to_i, "hour", value[0].to_i, "hour")
+            when "><h"
+              local_clock_time_clause(db_table, db_field, value[0], value[1], get_timezone )
+              
+            when "<<"
+              relative_date_clause(db_table, db_field, nil, -1, is_custom_filter)
+            when ">>"
+              relative_date_clause(db_table, db_field, 0, nil, is_custom_filter)
+              
             when "nd"
               # = tomorrow
               relative_date_clause(db_table, db_field, 1, 1, is_custom_filter)
@@ -181,7 +234,8 @@ module RedmineMoreFilters
         def sql_for_custom_field_with_more_filters(field, operator, value, custom_field_id)
           db_table = CustomValue.table_name
           db_field = 'value'
-          filter = @available_filters[field]
+          #filter = @available_filters[field]
+          filter = available_filters[field]
           return nil unless filter
           if filter[:field].format.target_class && filter[:field].format.target_class <= User
             if value.delete('me')
@@ -205,7 +259,7 @@ module RedmineMoreFilters
             customized_class = queried_class.reflect_on_association(assoc.to_sym).klass.base_class rescue nil
             raise "Unknown #{queried_class.name} association #{assoc}" unless customized_class
           end
-          where = sql_for_field(field, operator, value, db_table, db_field, true)
+          where = sql_for_field_with_more_filters(field, operator, value, db_table, db_field, true)
           if operator =~ /[<>]/
             where = "(#{where}) AND #{db_table}.#{db_field} <> ''"
           end
@@ -318,6 +372,43 @@ module RedmineMoreFilters
           queried_class.send :sanitize_sql_for_conditions,
             "#{db_field} #{match ? '' : 'NOT'} IN (#{values.map{|v| "'#{ActiveRecord::Base.connection.quote_string(v)}'"}.join(', ')})" 
         end #def
+        
+        # Returns a SQL clause for a time field.
+        def relative_time_clause(table, field, from, from_epoch, to, to_epoch )
+          s            = []
+          from_epoch ||= "second"
+          to_epoch   ||= "second"
+          if from
+            s << ("#{table}.#{field} > %s" % [Redmine::Database.relative_time( from, from_epoch )])
+          end
+          if to
+            s << ("#{table}.#{field} <= %s" % [Redmine::Database.relative_time( to, to_epoch )])
+          end
+          s.join(' AND ')
+        end #def
+        
+        # Returns a SQL clause for a time field in local time
+        # interprets the string as User local time
+        # User local time is converted to utc, which is database time
+        #
+        def local_clock_time_clause(table, field, from, to, time_zone )
+          s = []
+          
+          if from
+            s << ("(#{Redmine::Database.local_clock_time_sql(table, field, time_zone)}) > '%s'" % [from])
+          end
+          if to
+            s << ("(#{Redmine::Database.local_clock_time_sql(table, field, time_zone)}) <= '%s'" % [to])
+          end
+          s.join(' AND ')
+        end #def
+        
+        def get_timezone
+          return User.current.time_zone_or_default_identifier if User.current
+          return ActiveSupport::TimeZone[RedmineApp::Application.config.time_zone] if RedmineApp::Application.config.time_zone
+          "Etc/UTC"
+        end #def
+        
       end
     end
   end

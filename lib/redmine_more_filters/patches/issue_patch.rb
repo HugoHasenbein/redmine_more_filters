@@ -18,17 +18,37 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-#
 
-require 'redmine_more_filters/hooks/header_hook'
-require 'redmine_more_filters/patches/list_patch'
-require 'redmine_more_filters/patches/user_patch'
-require 'redmine_more_filters/patches/database_patch'
-require 'redmine_more_filters/patches/query_column_patch'
+module RedmineMoreFilters
+  module Patches
+    module IssuePatch
+      def self.included(base)
+        base.send(:include, InstanceMethods)
+        
+        base.class_eval do
+          unloadable
+          
+        end #base
+      end #self
+      
+      module InstanceMethods
+      
+        def created_on_by_clock_time
+          created_on.in_time_zone(User.current.time_zone_or_default_identifier).strftime("%H").to_i
+        end #def
+        
+        def updated_on_by_clock_time
+          updated_on.in_time_zone(User.current.time_zone_or_default_identifier).strftime("%H").to_i
+        end #def
+        
+      end #module
+    end #module
+  end #module
+end #module
 
-require 'redmine_more_filters/patches/issue_patch'
-require 'redmine_more_filters/patches/query_patch'          # after database_patch
-require 'redmine_more_filters/patches/issue_query_patch'    # after database_patch
-require 'redmine_more_filters/patches/queries_helper_patch'
-require 'redmine_more_filters/patches/info_patch'
+unless Issue.included_modules.include?(RedmineMoreFilters::Patches::IssuePatch)
+  Issue.send(:include, RedmineMoreFilters::Patches::IssuePatch)
+end
+
+
 
