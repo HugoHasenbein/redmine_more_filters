@@ -50,14 +50,20 @@ currently available filters:
 |        |passed||
 
 The new Time filters work on the issue fields "Created On" and "Updated On". 
+
 The "passed" filter is very much alike the existing date filter "<=" and toda'y date. However, this filter can be saved without having to update today's date. Further, it will find issues having a creation time or update time only one second ago.
-The between filter filters irrespectively of the date. If you want to filter today's date you can add the exsting filter "Updated" or "Created" today.
-By grouping by the hour (local time aware, local daylight savings aware) you can easily identify the "productive" hour and the blue hour of your team. You can also filter last hour's issue, if Redmine is used in a call center.
-Be aware that switching time zones may give surprising results with respect to grouping. Daylight savings transistions occur at different times in different countries. The grouping is local time aware and groups issues by the creation ort update hour of the day.
+
+The between clock times filter filters issues irrespectively of the date. If you want to filter clock times of today's date you can add the exsting filter "Updated" or "Created" today.
+
+By grouping issues by the hour (local time aware, local daylight savings aware) you can easily identify the "productive" hour and the "blue hour" of your team. 
+
+You can also filter last hour's issues, if Redmine is used in a call center.
+
+Be aware that switching time zones may give surprising results with respect to grouping by local clock time hours. Daylight savings transistions occur at different times in different countries. The grouping is local time aware and groups issues by the creation or update hour of the day.
 
 In Administration->Info you find the configured default timezones for the database, for Rails ActiveRecord and for Redmine. If you run in problems, please check here first.
 
-This plugin has been tested with posstgres. MySQl should run. It also should run on SQLServer, but it has not been tested. Please be aware, that timezone support varies exteremely betwee different databases.
+This plugin has been tested with posstgres. MySQl should run. It also should run on SQLServer, but it has not been tested. Please be aware, that timezone support varies extremely between different databases.
 
 #### PostgrSQL
 
@@ -134,7 +140,6 @@ Just install and go to issue page and select a date field with future dates, or 
 
 **1.0.2** 
   - beautified code
-
 
 **0.0.1** 
   - running on Redmine 3.4.6, 3.4.11
