@@ -1,0 +1,61 @@
+# encoding: utf-8
+#
+# Redmine plugin to add necessary filters to queries
+#
+# Copyright © 2019-2020 Stephan Wenzel <stephan.wenzel@drwpatent.de>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+
+ru:
+  
+  label_begins_with: "начинается с"
+  label_begins_with_any: "начинается с любого из"
+  label_not_begins_with: "не начинается с"
+  label_not_begins_with_any: "не начинается с любого из"
+  
+  label_ends_with: "заканчивается на"
+  label_ends_with_any: "заканчивается на любой из"
+  label_not_ends_with: "не заканчивается на"
+  label_not_ends_with_any: "не заканчивается на любой из"
+  
+  label_contains_any: "содержит любой из"
+  label_not_contains_any: "не содержит любой из"
+  label_contains_all: "содержит всё из"
+  label_not_contains_all: "не содержит ни один из"
+  
+  label_any_of: "один из"
+  label_none_of: "ни один из"
+  
+  label_tomorrow: "завтра"
+  label_next_week: "следующая неделя"
+  label_next_month: "следующий месяц"
+  
+  label_is_strict: "является (точно)"
+  label_is_not_strict: "не является (точно)"
+  
+  label_past: "прошлое"
+  label_future: "ожидается"
+  
+  label_time: "время"
+  label_hour_plural: "часы"
+  label_between_ago: "с по"
+  label_less_than_hours_ago: "меньше чем часов тому назад"
+  label_more_than_hours_ago: "больше чем часов тому назад"
+  label_o_clock: "время"
+  
+  field_created_on_by_clock_time: "Создано (время)"
+  field_updated_on_by_clock_time: "Изменено (время)"
+
