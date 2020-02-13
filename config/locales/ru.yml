@@ -58,4 +58,11 @@ ru:
   
   field_created_on_by_clock_time: "Создано (время)"
   field_updated_on_by_clock_time: "Изменено (время)"
+  
+  label_orfilter: "ИЛИ фильтры"
+  label_orfilter_and_any: "И любое из следующих"
+  label_orfilter_or_any: "ИЛИ любое из следующих"
+  label_orfilter_or_all: "ИЛИ всё из следующих"
+  label_match: "соответствует"
+  label_not_match: "не соответствует"
 

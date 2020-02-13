@@ -60,6 +60,7 @@ module RedmineMoreFilters
           ungrouped = []
           grouped = {}
           query.available_filters.map do |field, field_options|
+            Rails.logger.warn field.to_s
             if field_options[:type] == :relation
               group = :label_relations
             elsif field_options[:type] == :tree
@@ -75,6 +76,8 @@ module RedmineMoreFilters
               group = :label_time
             elsif field_options[:type] == :date_past || field_options[:type] == :date
               group = :label_date
+            elsif field_options[:group] == 'or_filter'
+              group = :label_orfilter
             end
             if group
               (grouped[group] ||= []) << [field_options[:name], field]
