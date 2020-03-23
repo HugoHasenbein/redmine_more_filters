@@ -1,0 +1,7 @@
+ja:
+  label_orfilter: "ORフィルタ"
+  label_orfilter_and_any: "上記 かつ (以下のいずれか)"
+  label_orfilter_or_any: "上記 または (以下のいずれか)"
+  label_orfilter_or_all: "上記 または (以下の全て)"
+  label_match: "match"
+  label_not_match: "not match"

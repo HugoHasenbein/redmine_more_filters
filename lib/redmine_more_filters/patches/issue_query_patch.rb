@@ -55,13 +55,28 @@ module RedmineMoreFilters
         
           initialize_available_filters_without_more_filters
           
-          add_available_filter("created_on_by_clock_time",
-            :type => :time_past
-          )
-          add_available_filter("updated_on_by_clock_time",
-            :type => :time_past
-          )
+            add_available_filter("created_on_by_clock_time",
+                :type => :time_past
+            )
+            add_available_filter("updated_on_by_clock_time",
+                :type => :time_past
+            )
           
+            add_available_filter "and_any",
+                :name => l(:label_orfilter_and_any),
+                :type => :list,
+                :values => [l(:general_text_Yes)],
+                :group => 'or_filter'
+            add_available_filter "or_any",
+                :name => l(:label_orfilter_or_any),
+                :type => :list,
+                :values => [l(:general_text_Yes)],
+                :group => 'or_filter'
+            add_available_filter "or_all",
+                :name => l(:label_orfilter_or_all),
+                :type => :list,
+                :values => [l(:general_text_Yes)],
+                :group => 'or_filter'
         end #def
         
         def sql_for_created_on_by_clock_time_field(field, operator, value)
