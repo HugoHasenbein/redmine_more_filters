@@ -53,7 +53,7 @@ zh:
   label_hour_plural: "小时"
   label_between_ago: "之间" 
   label_less_than_hours_ago: "小于几个小时前"
-  label_more_than_hours_ago: "大小几个小时前"
+  label_more_than_hours_ago: "大于几个小时前"
   label_o_clock: "时"
   
   field_created_on_by_clock_time: "创建于（一天中的时间）" 
