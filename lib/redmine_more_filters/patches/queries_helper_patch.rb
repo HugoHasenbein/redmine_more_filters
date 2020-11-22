@@ -75,6 +75,10 @@ module RedmineMoreFilters
               group = :label_time
             elsif field_options[:type] == :date_past || field_options[:type] == :date
               group = :label_date
+            elsif %w(attachment_filename attachment_description attachment_created attachment_created_on_by_clock_time attachment_author_id).include?(field)
+              group = :label_issue_attachment
+            elsif %w(notes).include?(field)
+              group = :label_notes
             end
             if group
               (grouped[group] ||= []) << [field_options[:name], field]

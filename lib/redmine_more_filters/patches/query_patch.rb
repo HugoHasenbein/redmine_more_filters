@@ -85,7 +85,7 @@ module RedmineMoreFilters
           )
         
         self.operators_by_filter_type[:string].insert(1, "*=", "!*=", "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
-        self.operators_by_filter_type[:text].insert(1, "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
+        self.operators_by_filter_type[:text].insert(  1,              "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
         
         self.operators_by_filter_type[:date].insert(14, "nm")
         self.operators_by_filter_type[:date].insert(11, "nw")
@@ -279,7 +279,7 @@ module RedmineMoreFilters
             operator = operator_for(field)
       
             # "me" value substitution
-            if %w(assigned_to_id author_id user_id watcher_id updated_by last_updated_by).include?(field)
+            if %w(assigned_to_id author_id user_id watcher_id updated_by last_updated_by attachment_author_id).include?(field)
               if v.delete("me")
                 if User.current.logged?
                   v.push(User.current.id.to_s)

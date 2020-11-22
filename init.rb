@@ -51,6 +51,9 @@
 #           sqlserver:
 #                  you must install https://github.com/mj1856/SqlServerTimeZoneSupport
 #                  to your database for this plugin to work. 
+#                  
+# 1.4.1
+#       - supports search text in notes, filename, description, author and creation time of attachments
 #
 require 'redmine'
 
@@ -58,7 +61,7 @@ Redmine::Plugin.register :redmine_more_filters do
   name 'Redmine More Filters'
   author 'Stephan Wenzel'
   description 'Plugin to add necessary filters to queries'
-  version '1.4.0'
+  version '1.4.1'
   url 'https://github.com/HugoHasenbein/redmine_more_filters'
   author_url 'https://github.com/HugoHasenbein/redmine_more_filters'
 

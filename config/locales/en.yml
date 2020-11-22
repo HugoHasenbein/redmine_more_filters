@@ -22,7 +22,7 @@
 en:
   
   label_begins_with: "begins with"
-  label_begins_with_any: "beginnt with any of"
+  label_begins_with_any: "begins with any of"
   label_not_begins_with: "does not begin with"
   label_not_begins_with_any: "does not begin with any of"
   
@@ -49,13 +49,22 @@ en:
   label_past: "passed"
   label_future: "forthcoming"
   
-  label_time: "time"
+  label_time: "Time"
   label_hour_plural: "hours"
   label_between_ago: "between ago"
-  label_less_than_hours_ago: "less than hours ago"
-  label_more_than_hours_ago: "less than hours ago"
   label_o_clock: "o'clock"
+  
+  label_less_than_hours_ago: "less than hours ago"
+  label_more_than_hours_ago: "more than hours ago"
   
   field_created_on_by_clock_time: "Created (Time of Day)"
   field_updated_on_by_clock_time: "Updated (Time of Day)"
-
+  
+  label_notes: "Notes"
+  
+  label_issue_attachment: "Issue attachment"
+  field_attachment_filename: "Attachment filename"
+  field_attachment_description: "Attachment description"
+  field_attachment_author: "Attachment author"
+  field_attachment_created_on: "Attachment created"
+  field_attachment_created_on_by_clock_time: "Attachment created (Time of Day)"

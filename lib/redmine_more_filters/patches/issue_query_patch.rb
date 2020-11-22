@@ -62,6 +62,29 @@ module RedmineMoreFilters
             :type => :time_past
           )
           
+          add_available_filter("notes",
+            :type => :text
+          )
+          
+          add_available_filter("attachment_filename",
+            :type => :string
+          )
+          
+          add_available_filter("attachment_created_on",
+            :type => :date_past
+          )
+          
+          add_available_filter("attachment_created_on_by_clock_time",
+            :type => :time_past
+          )
+          
+          add_available_filter("attachment_description",
+            :type => :string
+          )
+          
+          add_available_filter("attachment_author_id",
+            :type => :list, :values => lambda { author_values }
+          )
         end #def
         
         def sql_for_created_on_by_clock_time_field(field, operator, value)
@@ -70,6 +93,55 @@ module RedmineMoreFilters
         
         def sql_for_updated_on_by_clock_time_field(field, operator, value)
           sql_for_field( field, operator, value, Issue.table_name, 'updated_on' )
+        end #def
+        
+        def sql_for_notes_field(field, operator, value)
+          subquery = "SELECT 1 FROM #{Journal.table_name}" +
+            " WHERE #{Journal.table_name}.journalized_type='Issue' AND #{Journal.table_name}.journalized_id=#{Issue.table_name}.id" +
+            " AND (#{Journal.visible_notes_condition(User.current, :skip_pre_condition => true)})" +
+            " AND (#{sql_for_field field, operator, value, Journal.table_name, 'notes'})" 
+            
+          "EXISTS (#{subquery})"
+        end #def
+        
+        def sql_for_attachment_filename_field(field, operator, value)
+          subquery = "SELECT 1 FROM #{Attachment.table_name}" +
+            " WHERE #{Attachment.table_name}.container_type='Issue' AND #{Attachment.table_name}.container_id=#{Issue.table_name}.id" +
+            " AND (#{sql_for_field field, operator, value, Attachment.table_name, 'filename'})" 
+            
+          "EXISTS (#{subquery})"
+        end #def
+        
+        def sql_for_attachment_description_field(field, operator, value)
+          subquery = "SELECT 1 FROM #{Attachment.table_name}" +
+            " WHERE #{Attachment.table_name}.container_type='Issue' AND #{Attachment.table_name}.container_id=#{Issue.table_name}.id" +
+            " AND (#{sql_for_field field, operator, value, Attachment.table_name, 'description'})" 
+            
+          "EXISTS (#{subquery})"
+        end #def
+        
+        def sql_for_attachment_created_on_field(field, operator, value)
+          subquery = "SELECT 1 FROM #{Attachment.table_name}" +
+            " WHERE #{Attachment.table_name}.container_type='Issue' AND #{Attachment.table_name}.container_id=#{Issue.table_name}.id" +
+            " AND (#{sql_for_field field, operator, value, Attachment.table_name, 'created_on'})" 
+            
+          "EXISTS (#{subquery})"
+        end #def
+        
+        def sql_for_attachment_created_on_by_clock_time_field(field, operator, value)
+          subquery = "SELECT 1 FROM #{Attachment.table_name}" +
+            " WHERE #{Attachment.table_name}.container_type='Issue' AND #{Attachment.table_name}.container_id=#{Issue.table_name}.id" +
+            " AND (#{sql_for_field field, operator, value, Attachment.table_name, 'created_on'})" 
+            
+          "EXISTS (#{subquery})"
+        end #def
+        
+        def sql_for_attachment_author_id_field(field, operator, value)
+          subquery = "SELECT 1 FROM #{Attachment.table_name}" +
+            " WHERE #{Attachment.table_name}.container_type='Issue' AND #{Attachment.table_name}.container_id=#{Issue.table_name}.id" +
+            " AND (#{sql_for_field field, operator, value, Attachment.table_name, 'author_id'})" 
+            
+          "EXISTS (#{subquery})"
         end #def
         
       end #module

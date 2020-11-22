@@ -52,10 +52,20 @@ de:
   label_time: "Zeit"
   label_hour_plural: "Stunden"
   label_between_ago: "vor von bis"
+  label_o_clock: "Uhr"
+  
   label_less_than_hours_ago: "vor weniger als"
   label_more_than_hours_ago: "vor mehr als"
-  label_o_clock: "Uhr"
   
   field_created_on_by_clock_time: "Angelegt (Uhrzeit)"
   field_updated_on_by_clock_time: "Aktualisiert (Uhrzeit)"
+  
+  label_notes: "Kommentare"
+  
+  label_issue_attachment: "Ticket-Datei"
+  field_attachment_filename: "Datei-Name"
+  field_attachment_description: "Datei-Beschreibung"
+  field_attachment_author: "Datei-Autor"
+  field_attachment_created_on: "Datei angelegt"
+  field_attachment_created_on_by_clock_time: "Datei angelegt (Uhrzeit)"
 
