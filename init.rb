@@ -55,13 +55,16 @@
 # 1.4.1
 #       - supports search text in notes, filename, description, author and creation time of attachments
 #
+# 1.4.2
+#       - compatible with RedmineUp's redmine CRM plugin
+#
 require 'redmine'
 
 Redmine::Plugin.register :redmine_more_filters do
   name 'Redmine More Filters'
   author 'Stephan Wenzel'
   description 'Plugin to add necessary filters to queries'
-  version '1.4.1'
+  version '1.4.2'
   url 'https://github.com/HugoHasenbein/redmine_more_filters'
   author_url 'https://github.com/HugoHasenbein/redmine_more_filters'
 

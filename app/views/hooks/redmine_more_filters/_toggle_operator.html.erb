@@ -1,41 +1,31 @@
 <%= content_for :header_tags do %>
 <script type="text/javascript">
 
-function buildFilterRow(field, operator, values) {
-  var fieldId = field.replace('.', '_');
-  var filterTable = $("#filters-table");
+var buildFilterRowWithoutMoreFilters = buildFilterRow;
+buildFilterRow = function (field, operator, values) {
+
   var filterOptions = availableFilters[field];
   if (!filterOptions) return;
-  var operators = operatorByType[filterOptions['type']];
+  
+  /* original buildFilterRow */
+  buildFilterRowWithoutMoreFilters(field, operator, values);
+  
+  /* add redmine_more_filters specific fields, if necessary */
+  var fieldId = field.replace('.', '_');
   var filterValues = filterOptions['values'];
+  var operators = operatorByType[filterOptions['type']];
   var i, select;
-
-  var tr = $('<tr class="filter">').attr('id', 'tr_'+fieldId).html(
-    '<td class="field"><input checked="checked" id="cb_'+fieldId+'" name="f[]" value="'+field+'" type="checkbox"><label for="cb_'+fieldId+'"> '+filterOptions['name']+'</label></td>' +
-    '<td class="operator"><select id="operators_'+fieldId+'" name="op['+field+']"></td>' +
-    '<td class="values"></td>'
-  );
-  filterTable.append(tr);
-
-  select = tr.find('td.operator select');
-  for (i = 0; i < operators.length; i++) {
-    var option = $('<option>').val(operators[i]).text(operatorLabels[operators[i]]);
-    if (operators[i] == operator) { option.attr('selected', true); }
-    select.append(option);
-  }
-  select.change(function(){ toggleOperator(field); });
-
+  
+  select = $('#tr_'+fieldId).find('td.operator select');
+  
   switch (filterOptions['type']) {
-  case "list":
-  case "list_optional":
+  
   case "list_multiple":
-  case "list_status":
-  case "list_subprojects":
-    tr.find('td.values').append(
+    $('#tr_'+fieldId).find('td.values').append(
       '<span style="display:none;"><select class="value" id="values_'+fieldId+'_1" name="v['+field+'][]"></select>' +
       ' <span class="toggle-multiselect">&nbsp;</span></span>'
     );
-    select = tr.find('td.values select');
+    select = $('#tr_'+fieldId).find('td.values select');
     if (values.length > 1) { select.attr('multiple', true); }
     for (i = 0; i < filterValues.length; i++) {
       var filterValue = filterValues[i];
@@ -55,25 +45,14 @@ function buildFilterRow(field, operator, values) {
       select.append(option);
     }
     break;
-  case "date":
-  case "date_past":
-    tr.find('td.values').append(
-      '<span style="display:none;"><input type="date" name="v['+field+'][]" id="values_'+fieldId+'_1" size="10" class="value date_value" /></span>' +
-      ' <span style="display:none;"><input type="date" name="v['+field+'][]" id="values_'+fieldId+'_2" size="10" class="value date_value" /></span>' +
-      ' <span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'" size="3" class="value" /> '+labelDayPlural+'</span>'
-    );
-    $('#values_'+fieldId+'_1').val(values[0]).datepickerFallback(datepickerOptions);
-    $('#values_'+fieldId+'_2').val(values[1]).datepickerFallback(datepickerOptions);
-    $('#values_'+fieldId).val(values[0]);
-    break;
+    
   case "time_past":
-    tr.find('td.values').append(
+    $('#tr_'+fieldId).find('td.values').append(
       '<span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'_1" size="3" class="value" /> '+labelHourPlural+'</span>' +
       ' <span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'_2" size="3" class="value" /> '+labelHourPlural+'</span>' +
       ' <span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'" size="3" class="value" /> '+labelHourPlural+'</span>' +
       ' <span style="display:none;"><input type="time" name="v['+field+'][]" id="values_'+fieldId+'_3" size="10" class="value" /> '+labelClockTime+'</span>' +
       ' <span style="display:none;"><input type="time" name="v['+field+'][]" id="values_'+fieldId+'_4" size="10" class="value" /> '+labelClockTime+'</span>'
-      
     );
     $('#values_'+fieldId+'_1').val(values[0]);
     $('#values_'+fieldId+'_2').val(values[1]);
@@ -81,96 +60,72 @@ function buildFilterRow(field, operator, values) {
     $('#values_'+fieldId+'_3').val(values[0]);
     $('#values_'+fieldId+'_4').val(values[1]);
     break;
-  case "string":
-  case "text":
-    tr.find('td.values').append(
-      '<span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'" size="30" class="value" /></span>'
-    );
-    $('#values_'+fieldId).val(values[0]);
-    break;
-  case "relation":
-    tr.find('td.values').append(
-      '<span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'" size="6" class="value" /></span>' +
-      '<span style="display:none;"><select class="value" name="v['+field+'][]" id="values_'+fieldId+'_1"></select></span>'
-    );
-    $('#values_'+fieldId).val(values[0]);
-    select = tr.find('td.values select');
-    for (i = 0; i < filterValues.length; i++) {
-      var filterValue = filterValues[i];
-      var option = $('<option>');
-      option.val(filterValue[1]).text(filterValue[0]);
-      if (values[0] == filterValue[1]) { option.attr('selected', true); }
-      select.append(option);
-    }
-    break;
-  case "integer":
-  case "float":
-  case "tree":
-    tr.find('td.values').append(
-      '<span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'_1" size="14" class="value" /></span>' +
-      ' <span style="display:none;"><input type="text" name="v['+field+'][]" id="values_'+fieldId+'_2" size="14" class="value" /></span>'
-    );
-    $('#values_'+fieldId+'_1').val(values[0]);
-    $('#values_'+fieldId+'_2').val(values[1]);
-    break;
   }
-}
+};
 
-function toggleOperator(field) {
+var toggleOperatorWithoutMoreFilters = toggleOperator;
+toggleOperator = function (field, operator, values) {
   var fieldId = field.replace('.', '_');
   var operator = $("#operators_" + fieldId);
   switch (operator.val()) {
-    case "!*":
-    case "*=":
-    case "!*=":
-    case "*":
-    case "t":
-    case "nd":
-    case "ld":
-    case "w":
-    case "lw":
-    case "nw":
-    case "l2w":
-    case "m":
-    case "lm":
-    case "nm":
-    case "y":
-    case "o":
-    case "c":
-    case "*o":
-    case "!o":
-    case "<<":
-    case ">>":
-    case "<<t":
-    case "t>>":
+/*
+  "=="   is_strict,
+  "!!"   is_not_strict,
+   
+  "^="   begins_with,          (already added in RM 4 as "^")
+  "*^="  begins_with_any,
+  "!^="  not_begins_with,
+  "!*^=" not_begins_with_any,
+   
+  "$="   ends_with,            (already added in RM 4 as "$")
+  "*$="  ends_with_any,
+  "!$="  not_ends_with,
+  "!*$=" not_ends_with_any,
+   
+  "*="   any_of,
+  "!*="  none_of,
+   
+  "*~"   contains_any,
+  "!*~"  not_contains_any,
+  "[~]"  contains_all,
+  "![~]" not_contains_all,
+   
+  "nd"   tomorrow,
+  "nw"   next_week,
+  "nm"   next_month,
+   
+  "<<"   past,
+  ">>"   future,
+   
+  ">h-"  less_than_hours_ago,
+  "<h-"  more_than_hours_ago,
+  "><h-" between_ago,
+  "><h"  between,
+   
+  "<<t"  past clocktime,
+  "t>>"  future clocktime
+*/
+    case "nw":     /* next week  (already added in RM 4) */
+    case "nm":     /* next month (already added in RM 4) */
+    case "lm":     /* last month (already added in RM 4) */
+    case "<<":     /* past   */
+    case ">>":     /* future */
+    case "<<t":    /* past clocktime */
+    case "t>>":    /* future clocktime */
       enableValues(field, []);
       break;
-    case "><":
-    case "><h-":
+    case "><h-":   /* between hours ago */
       enableValues(field, [0,1]);
       break;
-    case "><h":
+    case "><h":    /* between hours */
       enableValues(field, [3,4]);
       break;
-    case "<t+":
-    case ">t+":
-    case "><t+":
-    case "t+":
-    case ">t-":
-    case "<t-":
-    case "><t-":
-    case "t-":
-    case ">h-":
-    case "<h-":
+    case ">h-":    /* less than hours ago */
+    case "<h-":    /* more than hours ago */
       enableValues(field, [2]);
       break;
-    case "=p":
-    case "=!p":
-    case "!p":
-      enableValues(field, [1]);
-      break;
     default:
-      enableValues(field, [0]);
+      toggleOperatorWithoutMoreFilters(field, operator, values);
       break;
   }
 }
