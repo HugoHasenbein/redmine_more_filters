@@ -118,6 +118,12 @@ Just install and go to issue page and select a date field with future dates, or 
 * English
 * Chinese
 
+**1.4.2**
+  - compatible with RedmineUp's redmine CRM plugin
+  
+**1.4.1**
+  - supports search text in notes, filename, description, author and creation time of attachments
+
 **1.4.0**
   - added more time filters
   - time filters supported for postgres (tested), MySQL (untested) and SQLServer (untested)
