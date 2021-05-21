@@ -19,30 +19,30 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 
-zh:
+zh-TW:
   
-  label_begins_with: "開頭是"
-  label_begins_with_any: "開頭是任一"
-  label_not_begins_with: "開頭不是"
-  label_not_begins_with_any: "開頭不是任一"
+  label_begins_with:                                  "開頭是"
+  label_begins_with_any:                              "開頭是任一"
+  label_not_begins_with:                              "開頭不是"
+  label_not_begins_with_any:                          "開頭不是任一"
   
-  label_ends_with: "結尾是"
-  label_ends_with_any: "結尾是任一"
-  label_not_ends_with: "結尾不是"
-  label_not_ends_with_any: "結尾不是任一"
+  label_ends_with:                                    "結尾是"
+  label_ends_with_any:                                "結尾是任一"
+  label_not_ends_with:                                "結尾不是"
+  label_not_ends_with_any:                            "結尾不是任一"
   
-  label_contains_any: "包含任一"
-  label_not_contains_any: "不包含任一"
-  label_contains_all: "包含全部"
-  label_not_contains_all: "未包含全部"
+  label_contains_any:                                 "包含任一"
+  label_not_contains_any:                             "不包含任一"
+  label_contains_all:                                 "包含全部"
+  label_not_contains_all:                             "未包含全部"
   
-  label_any_of: "等於任一"
-  label_none_of: "不等於任一"
+  label_any_of:                                       "等於任一"
+  label_none_of:                                      "不等於任一"
 
-  label_tomorrow: "明天"
-  label_next_week: "下週"
-  label_next_month: "下個月"
+  label_tomorrow:                                     "明天"
+  label_next_week:                                    "下週"
+  label_next_month:                                   "下個月"
   
-  label_is_strict: "完全等於(精確匹配)"
-  label_is_not_strict: "未完全等於(精確匹配)"
+  label_is_strict:                                    "完全等於(精確匹配)"
+  label_is_not_strict:                                "未完全等於(精確匹配)"
 

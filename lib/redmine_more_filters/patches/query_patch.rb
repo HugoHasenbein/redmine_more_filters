@@ -70,6 +70,7 @@ module RedmineMoreFilters
             "nd"    => :label_tomorrow,
             "nw"    => :label_next_week,
             "nm"    => :label_next_month,
+            "n3m"   => :label_next_three_months,
             
             "<<"    => :label_past,
             ">>"    => :label_future,
@@ -87,7 +88,8 @@ module RedmineMoreFilters
         self.operators_by_filter_type[:string].insert(1, "*=", "!*=", "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
         self.operators_by_filter_type[:text].insert(  1,              "^=", "*^=", "!^=", "!*^=", "$=", "*$=", "!$=", "!*$=", "*~", "!*~", "[~]", "![~]")
         
-        self.operators_by_filter_type[:date].insert(14, "nm")
+        self.operators_by_filter_type[:date].insert(14, "n3m")
+        self.operators_by_filter_type[:date].insert(15, "nm")
         self.operators_by_filter_type[:date].insert(11, "nw")
         self.operators_by_filter_type[:date].insert( 9, "nd")
         self.operators_by_filter_type[:date].insert( 9, ">>")
@@ -131,7 +133,7 @@ module RedmineMoreFilters
                 # filter requires one or more values
                 (values_for(field) and !values_for(field).first.blank?) or
                 # filter doesn't require any value
-                ["o", "c", "!*", "*", "t", "ld", "nd", "<<", ">>", "<<t", "t>>", "w", "lw", "nw", "l2w", "m", "lm", "nm", "y", "*o", "!o"].include? operator_for(field)
+                ["o", "c", "!*", "*", "t", "ld", "nd", "<<", ">>", "<<t", "t>>", "w", "lw", "nw", "l2w", "m", "lm", "nm", "n3m", "y", "*o", "!o"].include? operator_for(field)
           end if filters
         end #def
         
@@ -223,6 +225,10 @@ module RedmineMoreFilters
              # = next month
              date = User.current.today.next_month
              date_clause(db_table, db_field, date.beginning_of_month, date.end_of_month, is_custom_filter)
+            when "n3m"
+             # = next three months
+             date = User.current.today.advance(:months => 3)
+             date_clause(db_table, db_field, User.current.today, date, is_custom_filter)
             when "="
               sql_for_field_without_more_filters(field, operator, value, db_table, db_field, is_custom_filter)
             else

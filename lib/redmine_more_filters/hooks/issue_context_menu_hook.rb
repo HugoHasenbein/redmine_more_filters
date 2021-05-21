@@ -18,24 +18,17 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-#
 
-# hooks
-require 'redmine_more_filters/hooks/header_hook'
-require 'redmine_more_filters/hooks/issue_show_hook'
-require 'redmine_more_filters/hooks/issue_context_menu_hook'
-
-# patches
-require 'redmine_more_filters/patches/list_patch'
-require 'redmine_more_filters/patches/user_patch'
-require 'redmine_more_filters/patches/database_patch'
-require 'redmine_more_filters/patches/query_column_patch'
-
-require 'redmine_more_filters/patches/issue_patch'
-require 'redmine_more_filters/patches/query_patch'          # after database_patch
-require 'redmine_more_filters/patches/issue_query_patch'    # after database_patch
-require 'redmine_more_filters/patches/queries_helper_patch'
-require 'redmine_more_filters/patches/info_patch'
-require 'redmine_more_filters/patches/gantt_patch'
-require 'redmine_more_filters/patches/gantts_controller_patch'
-
+module RedmineMoreFilters
+  module Hooks
+    class IssueContextMenu < Redmine::Hook::ViewListener
+      def view_issues_context_menu_end(context={ })
+        context[:controller].send(:render_to_string, {
+          :partial => 'hooks/redmine_more_filters/issues_context_menu',
+          :locals => context
+        }) if context[:issues].all?{|issue| issue.project.module_enabled?(:gantt)}
+      end
+      #render_on :view_issues_show_description_bottom, :partial => 'hooks/redmine_more_filters/issue_show'
+    end
+  end
+end

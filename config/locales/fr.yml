@@ -1,0 +1,75 @@
+# encoding: utf-8
+#
+# Redmine plugin to add necessary filters to queries
+#
+# Copyright © 2019-2020 Stephan Wenzel <stephan.wenzel@drwpatent.de>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+
+fr:
+  
+  label_begins_with:                                  "commence par"
+  label_begins_with_any:                              "commence par l'un des éléments suivants"
+  label_not_begins_with:                              "ne commence pas par"
+  label_not_begins_with_any:                          "ne commence pas par un des"
+  
+  label_ends_with:                                    "se termine par"
+  label_ends_with_any:                                "se termine par n'importe quel élément de"
+  label_not_ends_with:                                "ne se termine pas par"
+  label_not_ends_with_any:                            "ne se termine pas par un des éléments suivants"
+  
+  label_contains_any:                                 "contient n'importe quel élément de"
+  label_not_contains_any:                             "ne contient aucun des éléments suivants"
+  label_contains_all:                                 "contient tout"
+  label_not_contains_all:                             "Ne contient pas tous les éléments"
+  
+  label_any_of:                                       "est l'un de"
+  label_none_of:                                      "n'est pas un de"
+  
+  label_tomorrow:                                     "demain"
+  label_next_week:                                    "semaine prochaine"
+  label_next_month:                                   "mois prochain "
+  label_next_three_months:                            "les trois prochains mois"
+  
+  label_is_strict:                                    "est (strict)"
+  label_is_not_strict:                                "n'est pas (strict)"
+  
+  label_past:                                         "passé"
+  label_future:                                       "à venir"
+  
+  label_time:                                         "temps"
+  label_hour_plural:                                  "heures"
+  label_between_ago:                                  "entre il y a"
+  label_o_clock:                                      "heure"
+  
+  label_less_than_hours_ago:                          "il y a moins de quelques heures"
+  label_more_than_hours_ago:                          "plus de quelques heures"
+  
+  field_created_on_by_clock_time:                     "Créé heure de la journée"
+  field_updated_on_by_clock_time:                     "Mis à jour (heure du jour)"
+  
+  label_notes:                                        "Notes"
+  
+  label_issue_attachment:                             "Pièce jointe"
+  field_attachment_filename:                          "Nom de fichier de la pièce jointe"
+  field_attachment_description:                       "Description de la pièce jointe"
+  field_attachment_author:                            "Auteur de la pièce jointe"
+  field_attachment_created_on:                        "Pièce jointe créée"
+  field_attachment_created_on_by_clock_time:          "Pièce jointe créée (heure de la journée)"
+  
+  label_all_relations:                                "Toutes les relations"
+    
+  

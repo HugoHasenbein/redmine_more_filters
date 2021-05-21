@@ -58,13 +58,24 @@
 # 1.4.2
 #       - compatible with RedmineUp's redmine CRM plugin
 #
+# 1.4.3
+#       - added root issue         filter
+#       - added related issues     filter
+#       - added all related issues filter
+#       - added Gantt link in Subtask pane, Related Task pane and in Issue's action menu
+#       - added Gantt link in Issue context menu
+#       - added Gantt auto centering of Gantt charts for Gantt links
+#       - added next three months for date queries
+#       - added localizations: es, fr, ru, pt
+#
+#
 require 'redmine'
 
 Redmine::Plugin.register :redmine_more_filters do
   name 'Redmine More Filters'
   author 'Stephan Wenzel'
   description 'Plugin to add necessary filters to queries'
-  version '1.4.2'
+  version '1.4.3'
   url 'https://github.com/HugoHasenbein/redmine_more_filters'
   author_url 'https://github.com/HugoHasenbein/redmine_more_filters'
 

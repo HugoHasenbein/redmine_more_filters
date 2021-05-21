@@ -1,0 +1,10 @@
+/* ********************************************************* */
+/* additional icons                                          */
+/* ********************************************************* */
+.icon-gantt {
+    background-image: url(../images/icon-gantt.png);
+    background-repeat: no-repeat;
+    padding: 4px 4px 4px 17px;
+    background-position-y: 0px; 
+    background-size: 16px 14px;
+}

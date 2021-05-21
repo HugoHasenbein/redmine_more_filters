@@ -1,0 +1,19 @@
+<%
+  all_relations_query = {
+    :set_filter => "1", 
+    :gantt      => "1", 
+    :f          => ["all_relations", ""], 
+    :op         => {"all_relations"=>"="}, 
+    :v          => {"all_relations"=> [@issue_ids.join(",")] },
+    :x          => 1,
+   #:query      => {"draw_selected_columns"=>"0", "draw_relations"=>"1", "draw_progress_line"=>"0"}, 
+   #:months     => "3", 
+   #:month      =>  User.current.today.month, 
+   #:year       =>  User.current.today.year, 
+   #:zoom       => "4", 
+  }
+%>
+<li><%= link_to( l(:label_gantt), 
+             url_for({:controller => "gantts", :action => "show"}.merge(all_relations_query)),
+             :class => "icon icon-gantt"
+           ) %> </li>

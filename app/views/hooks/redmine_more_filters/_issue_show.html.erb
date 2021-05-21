@@ -1,0 +1,59 @@
+<% 
+  root_query = {
+    :set_filter => "1", 
+    :gantt      => "1", 
+    :f          => ["root_id", ""], 
+    :op         => {"root_id"=>"="}, 
+    :v          => {"root_id"=>[issue.root_id]}, 
+    :x          => 1,
+   #:query      => {"draw_selected_columns"=>"0", "draw_relations"=>"1", "draw_progress_line"=>"0"}, 
+   #:months     => "3", 
+   #:month      =>  User.current.today.month, 
+   #:year       =>  User.current.today.year, 
+   #:zoom       => "4", 
+    :project_id => issue.project.identifier
+  }
+  root_query_link = link_to( l(:label_gantt), url_for({:controller => "gantts", :action => "show"}.merge(root_query)))
+  
+  any_relation_query = {
+    :set_filter => "1", 
+    :gantt      => "1", 
+    :f          => ["any_relation", ""], 
+    :op         => {"any_relation"=>"="}, 
+    :v          => {"any_relation"=>[issue.id]}, 
+    :x          => 1,
+   #:query      => {"draw_selected_columns"=>"0", "draw_relations"=>"1", "draw_progress_line"=>"0"}, 
+   #:months     => "3", 
+   #:month      =>  User.current.today.month, 
+   #:year       =>  User.current.today.year, 
+   #:zoom       => "4", 
+    :project_id => issue.project.identifier
+  }
+  any_relation_query_link = link_to( l(:label_gantt), url_for({:controller => "gantts", :action => "show"}.merge(any_relation_query)), :id => "any_relation_query_link")
+  
+  all_relations_query = {
+    :set_filter => "1", 
+    :gantt      => "1", 
+    :f          => ["all_relations", ""], 
+    :op         => {"all_relations"=>"="}, 
+    :v          => {"all_relations"=> [issue.id] }, 
+    :x          => 1,
+   #:query      => {"draw_selected_columns"=>"0", "draw_relations"=>"1", "draw_progress_line"=>"0"}, 
+   #:months     => "3", 
+   #:month      =>  User.current.today.month, 
+   #:year       =>  User.current.today.year, 
+   #:zoom       => "4", 
+    :project_id => issue.project.identifier
+  }
+  all_relations_query_link = link_to( l(:label_gantt), url_for({:controller => "gantts", :action => "show"}.merge(all_relations_query)), :class => "icon icon-gantt")
+%>
+<script>
+$( document ).ready(function() {
+  $('#issue_tree div.contextual').prepend('<%= escape_javascript root_query_link %>');
+  $('#content    div.contextual').first().prepend('<%= escape_javascript all_relations_query_link %>');
+  $('#relations  div.contextual').prepend('<%= escape_javascript any_relation_query_link %>');
+});
+$(document).on('DOMNodeInserted', '#relations p', function() {
+  $('#relations div.contextual').prepend('<%= escape_javascript any_relation_query_link %>');
+});
+</script>

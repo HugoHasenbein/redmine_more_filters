@@ -82,6 +82,58 @@ module RedmineMoreFilters
           end
         end #def
         
+        # Returns a SQL statement for month of date
+        def month_of_date_sql( table_name, field, time_zone )
+          if postgresql?   
+            "EXTRACT(MONTH FROM #{local_clock_time_sql( table_name, field, time_zone)})"
+          elsif mysql?
+            "MONTH( #{local_clock_time_sql( table_name, field, time_zone)} )"
+          elsif sqlserver?
+            "MONTH( #{local_clock_time_sql( table_name, field, time_zone)} )"
+          else
+            nil
+          end
+        end #def
+        
+        # Returns a SQL statement for month of date
+        def year_of_date_sql( table_name, field, time_zone )
+          if postgresql?   
+            "EXTRACT(YEAR FROM #{local_clock_time_sql( table_name, field, time_zone)})"
+          elsif mysql?
+            "YEAR( #{local_clock_time_sql( table_name, field, time_zone)} )"
+          elsif sqlserver?
+            "YEAR( #{local_clock_time_sql( table_name, field, time_zone)} )"
+          else
+            nil
+          end
+        end #def
+        
+        # Returns a SQL statement for month of date
+        def date_diff_sql( table_name, start_field, end_field )
+          if postgresql?   
+            "CAST(#{table_name}.#{end_field} - #{table_name}.#{start_field} as INTEGER)"
+          elsif mysql?
+            "DATEDIFF(#{table_name}.#{end_field}, #{table_name}.#{start_field})"
+          elsif sqlserver?
+            "DATEDIFF(dd, #{table_name}.#{start_field}, #{table_name}.#{end_field})"
+          else
+            nil
+          end
+        end #def
+        
+        # Returns a SQL statement for month of date
+        def ago_sql( table_name, field )
+          if postgresql?   
+            "CAST( CURRENT_DATE - #{table_name}.#{field})"
+          elsif mysql?
+            "DATEDIFF(CURRENT_DATE(), #{table_name}.#{field})"
+          elsif sqlserver?
+            "DATEDIFF(dd, #{table_name}.#{field}, GETDATE())"
+          else
+            nil
+          end
+        end #def
+        
         def query_db_timezone
           sql = 
           if postgresql?

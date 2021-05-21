@@ -1,0 +1,73 @@
+# encoding: utf-8
+#
+# Redmine plugin to add necessary filters to queries
+#
+# Copyright © 2019-2020 Stephan Wenzel <stephan.wenzel@drwpatent.de>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+
+pt:
+  
+  label_begins_with:                                  "começa com"
+  label_begins_with_any:                              "começa com qualquer uma de"
+  label_not_begins_with:                              "não começa por"
+  label_not_begins_with_any:                          "não começa com nenhuma das"
+  
+  label_ends_with:                                    "termina com"
+  label_ends_with_any:                                "termina com qualquer um de"
+  label_not_ends_with:                                "não termina com"
+  label_not_ends_with_any:                            "não termina com nenhum dos"
+  
+  label_contains_any:                                 "contém qualquer um de"
+  label_not_contains_any:                             "não contém nada de"
+  label_contains_all:                                 "contém tudo de"
+  label_not_contains_all:                             "não contém tudo de"
+  
+  label_any_of:                                       "é uma de"
+  label_none_of:                                      "não é nenhuma de"
+  
+  label_tomorrow:                                     "amanhã"
+  label_next_week:                                    "na próxima semana"
+  label_next_month:                                   "no próximo mês"
+  label_next_three_months:                            "nos próximos três meses"
+  
+  label_is_strict:                                    "é (estrito)"
+  label_is_not_strict:                                "não é (estrito)"
+  
+  label_past:                                         "passado"
+  label_future:                                       "em breve"
+  
+  label_time:                                         "Tempo"
+  label_hour_plural:                                  "horas"
+  label_between_ago:                                  "entre"
+  label_o_clock:                                      "o'clock"
+  
+  label_less_than_hours_ago:                          "há menos de horas"
+  label_more_than_hours_ago:                          "há mais de horas"
+  
+  field_created_on_by_clock_time:                     "Criado (Hora do dia)"
+  field_updated_on_by_clock_time:                     "Actualizado (Hora do dia)"
+  
+  label_notes:                                        "Notas"
+  
+  label_issue_attachment:                             "anexo de emissão"
+  field_attachment_filename:                          "Nome_do_arquivo anexo"
+  field_attachment_description:                       "Descrição do anexo"
+  field_attachment_author:                            "Autor do anexo"
+  field_attachment_created_on:                        "Fixação criada"
+  field_attachment_created_on_by_clock_time:          "Fixação criada (Hora do dia)"
+  
+  label_all_relations:                                "Tudo relacionado com"

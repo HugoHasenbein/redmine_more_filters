@@ -1,0 +1,74 @@
+# encoding: utf-8
+#
+# Redmine plugin to add necessary filters to queries
+#
+# Copyright © 2019-2020 Stephan Wenzel <stephan.wenzel@drwpatent.de>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+
+ru:
+  
+  label_begins_with:                                  "начинается с"
+  label_begins_with_any:                              "начинается с любого из"
+  label_not_begins_with:                              "не начинается с"
+  label_not_begins_with_any:                          "не начинается ни с одного из"
+  
+  label_ends_with:                                    "заканчивается на"
+  label_ends_with_any:                                "заканчивается любым из"
+  label_not_ends_with:                                "не заканчивается на"
+  label_not_ends_with_any:                            "не заканчивается ни одним из"
+  
+  label_contains_any:                                 "содержит любое из"
+  label_not_contains_any:                             "не содержит ничего из"
+  label_contains_all:                                 "содержит все"
+  label_not_contains_all:                             "содержит не все"
+  
+  label_any_of:                                       "является одним из"
+  label_none_of:                                      "не является ни одним из"
+  
+  label_tomorrow:                                     "завтра"
+  label_next_week:                                    "следующая неделя"
+  label_next_month:                                   "следующий месяц"
+  label_next_three_months:                            "следующие три месяца"
+  
+  label_is_strict:                                    "является (строгим)"
+  label_is_not_strict:                                "не является (строгим)"
+  
+  label_past:                                         "прошло"
+  label_future:                                       "предстоящий"
+  
+  label_time:                                         "время"
+  label_hour_plural:                                  "часы"
+  label_between_ago:                                  "между назад"
+  label_o_clock:                                      "часы"
+  
+  label_less_than_hours_ago:                          "меньше часов назад"
+  label_more_than_hours_ago:                          "более часов назад"
+  
+  field_created_on_by_clock_time:                     "Создано (время дня)"
+  field_updated_on_by_clock_time:                     "Обновлено (время дня)"
+  
+  label_notes:                                        "Примечания"
+  
+  label_issue_attachment:                             "Вложение к выпуску"
+  field_attachment_filename:                          "Имя файла вложения"
+  field_attachment_description:                       "Описание вложения"
+  field_attachment_author:                            "Автор вложения"
+  field_attachment_created_on:                        "Вложение создано"
+  field_attachment_created_on_by_clock_time:          "Вложение создано (время суток)"
+  
+  label_all_relations:                                "Все связанные с"
+

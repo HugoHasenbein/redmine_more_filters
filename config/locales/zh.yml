@@ -21,51 +21,55 @@
 
 zh:
   
-  label_begins_with: "开头是"
-  label_begins_with_any: "开头是任一"
-  label_not_begins_with: "开头不是"
-  label_not_begins_with_any: "开头不是任一"
+  label_begins_with:                                  "开头是"
+  label_begins_with_any:                              "开头是任一"
+  label_not_begins_with:                              "开头不是"
+  label_not_begins_with_any:                          "开头不是任一"
   
-  label_ends_with: "结尾是"
-  label_ends_with_any: "结尾是任一"
-  label_not_ends_with: "结尾不是"
-  label_not_ends_with_any: "结尾不是任一"
+  label_ends_with:                                    "结尾是"
+  label_ends_with_any:                                "结尾是任一"
+  label_not_ends_with:                                "结尾不是"
+  label_not_ends_with_any:                            "结尾不是任一"
   
-  label_contains_any: "包含任一"
-  label_not_contains_any: "不包含任一"
-  label_contains_all: "包含全部"
-  label_not_contains_all: "未包含全部"
+  label_contains_any:                                 "包含任一"
+  label_not_contains_any:                             "不包含任一"
+  label_contains_all:                                 "包含全部"
+  label_not_contains_all:                             "未包含全部"
   
-  label_any_of: "等于任一"
-  label_none_of: "不等于任一"
+  label_any_of:                                       "等于任一"
+  label_none_of:                                      "不等于任一"
 
-  label_tomorrow: "明天"
-  label_next_week: "下周"
-  label_next_month: "下个月"
+  label_tomorrow:                                     "明天"
+  label_next_week:                                    "下周"
+  label_next_month:                                   "下个月"
+  label_next_three_months:                            "未来三个月"
   
-  label_is_strict: "完全等于(精确匹配)"
-  label_is_not_strict: "未完全等于(精确匹配)"
+  label_is_strict:                                    "完全等于(精确匹配)"
+  label_is_not_strict:                                "未完全等于(精确匹配)"
   
-  label_past: "過去"
-  label_future: "未來"
+  label_past:                                         "過去"
+  label_future:                                       "未來"
   
-  label_time: "時間"
-  label_hour_plural: "小時"
-  label_between_ago: "之間" 
-  label_o_clock: "時"
+  label_time:                                         "時間"
+  label_hour_plural:                                  "小時"
+  label_between_ago:                                  "之間" 
+  label_o_clock:                                      "時"
   
-  label_less_than_hours_ago: "不到几个小时前"
-  label_more_than_hours_ago: "几个多小时前"
+  label_less_than_hours_ago:                          "不到几个小时前"
+  label_more_than_hours_ago:                          "几个多小时前"
   
-  field_created_on_by_clock_time: "创建于（一天中的時間）" 
-  field_updated_on_by_clock_time: "更新于（一天中的時間）"
+  field_created_on_by_clock_time:                     "创建于（一天中的時間）" 
+  field_updated_on_by_clock_time:                     "更新于（一天中的時間）"
   
-  label_notes: "说明"
+  label_notes:                                        "说明"
   
-  label_issue_attachment: "问题-文件"
-  field_attachment_filename: "文件"
-  field_attachment_description: "文件-描述"
-  field_attachment_author: "文件-作者"
-  field_attachment_created_on: "文件  创建于"
-  field_attachment_created_on_by_clock_time: "文件 创建于（一天中的時間）"
+  label_issue_attachment:                             "问题-文件"
+  field_attachment_filename:                          "文件"
+  field_attachment_description:                       "文件-描述"
+  field_attachment_author:                            "文件-作者"
+  field_attachment_created_on:                        "文件  创建于"
+  field_attachment_created_on_by_clock_time:          "文件 创建于（一天中的時間）"
+  
+  label_all_relations:                                "所有与之相关的"
+
 

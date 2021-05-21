@@ -43,6 +43,10 @@ module RedmineMoreFilters
             QueryColumn.new(:updated_on_by_clock_time, 
               :sortable  => lambda { Redmine::Database.local_clock_time_sql(         Issue.table_name, "updated_on", User.current.time_zone_or_default_identifier )}, 
               :groupable => lambda { Redmine::Database.hour_of_local_clock_time_sql( Issue.table_name, "updated_on", User.current.time_zone_or_default_identifier )}
+            ),
+            QueryColumn.new(:root, 
+              :sortable  => "#{Issue.table_name}.root_id", :default_order => 'desc',
+              :groupable => true
             )
           ]
           
@@ -55,9 +59,23 @@ module RedmineMoreFilters
         
           initialize_available_filters_without_more_filters
           
+          add_available_filter "root_id", 
+            :type  => :integer, 
+            :label => :field_root
+            
+          add_available_filter "any_relation", 
+            :type  => :relation, 
+            :values => lambda {all_projects_values},
+            :label => :label_related_issues
+            
+          add_available_filter "all_relations", 
+            :type  => :integer, 
+            :label => :label_all_relations
+            
           add_available_filter("created_on_by_clock_time",
             :type => :time_past
           )
+          
           add_available_filter("updated_on_by_clock_time",
             :type => :time_past
           )
@@ -143,6 +161,55 @@ module RedmineMoreFilters
             
           "EXISTS (#{subquery})"
         end #def
+        
+        def sql_for_any_relation_field(field, operator, value, options={})
+        
+          join_column, target_join_column = "issue_from_id", "issue_to_id"
+          if options[:reverse]
+            join_column, target_join_column = target_join_column, join_column
+          end
+          
+          sql =
+            case operator
+            when "*", "!*"
+              op = (operator == "*" ? 'IN' : 'NOT IN')
+              "#{Issue.table_name}.id #{op} (SELECT DISTINCT #{IssueRelation.table_name}.#{join_column} FROM #{IssueRelation.table_name})"
+            when "=", "!"
+              op = (operator == "=" ? 'IN' : 'NOT IN')
+              "#{Issue.table_name}.id #{op} (SELECT DISTINCT #{IssueRelation.table_name}.#{join_column} FROM #{IssueRelation.table_name} WHERE #{IssueRelation.table_name}.#{target_join_column} = #{value.first.to_i})"
+            when "=p", "=!p", "!p"
+              op = (operator == "!p" ? 'NOT IN' : 'IN')
+              comp = (operator == "=!p" ? '<>' : '=')
+              "#{Issue.table_name}.id #{op} (SELECT DISTINCT #{IssueRelation.table_name}.#{join_column} FROM #{IssueRelation.table_name}, #{Issue.table_name} relissues WHERE #{IssueRelation.table_name}.#{target_join_column} = relissues.id AND relissues.project_id #{comp} #{value.first.to_i})"
+            when "*o", "!o"
+              op = (operator == "!o" ? 'NOT IN' : 'IN')
+              "#{Issue.table_name}.id #{op} (SELECT DISTINCT #{IssueRelation.table_name}.#{join_column} FROM #{IssueRelation.table_name}, #{Issue.table_name} relissues WHERE #{IssueRelation.table_name}.#{target_join_column} = relissues.id AND relissues.status_id IN (SELECT id FROM #{IssueStatus.table_name} WHERE is_closed=#{self.class.connection.quoted_false}))"
+            end
+          if !options[:reverse]
+            sqls = [sql, sql_for_any_relation_field(field, operator, value, :reverse => true)]
+            sqls << sql_for_field("id", "=", value, Issue.table_name, 'id') if ["="].include?(operator)
+            sql = sqls.join(["!", "!*", "!p", '!o'].include?(operator) ? " AND " : " OR ")
+          end
+          "(#{sql})"
+        end
+        
+        def sql_for_all_relations_field(field, operator, value, options={})
+        
+          join_column, target_join_column = "issue_from_id", "issue_to_id"
+          if options[:reverse]
+            join_column, target_join_column = target_join_column, join_column
+          end
+          
+          int_sql   = sql_for_field('all_relations', operator, value, "rels", target_join_column)
+          issue_sql = sql_for_field('all_relations', operator, value, Issue.table_name, 'id')
+          sql = "(#{Issue.table_name}.root_id IN ( SELECT DISTINCT #{Issue.table_name}.root_id FROM #{Issue.table_name}, #{IssueRelation.table_name} rels WHERE #{Issue.table_name}.id = rels.#{join_column} AND #{int_sql} ) OR " +
+                " #{Issue.table_name}.root_id IN ( SELECT DISTINCT #{Issue.table_name}.root_id FROM #{Issue.table_name} WHERE #{issue_sql} ))"
+          if !options[:reverse]
+            sqls = [sql, sql_for_all_relations_field(field, operator, value, :reverse => true)]
+            sql = sqls.join(["="].include?(operator) ? " OR " : " AND ")
+          end
+          "(#{sql})"
+        end
         
       end #module
     end #module

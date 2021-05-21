@@ -18,24 +18,26 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-#
 
-# hooks
-require 'redmine_more_filters/hooks/header_hook'
-require 'redmine_more_filters/hooks/issue_show_hook'
-require 'redmine_more_filters/hooks/issue_context_menu_hook'
+module RedmineMoreFilters
+  module Patches
+    module GanttPatch
+      def self.included(base)
+        
+        base.class_eval do
+          
+          attr_writer :year_from, :month_from, :date_from, :date_to, :zoom, :months, :truncated, :max_rows
+          
+        end #base
+      end #self
+      
+    end #module
+  end #module
+end #module
 
-# patches
-require 'redmine_more_filters/patches/list_patch'
-require 'redmine_more_filters/patches/user_patch'
-require 'redmine_more_filters/patches/database_patch'
-require 'redmine_more_filters/patches/query_column_patch'
+unless Redmine::Helpers::Gantt.included_modules.include?(RedmineMoreFilters::Patches::GanttPatch)
+  Redmine::Helpers::Gantt.send(:include, RedmineMoreFilters::Patches::GanttPatch)
+end
 
-require 'redmine_more_filters/patches/issue_patch'
-require 'redmine_more_filters/patches/query_patch'          # after database_patch
-require 'redmine_more_filters/patches/issue_query_patch'    # after database_patch
-require 'redmine_more_filters/patches/queries_helper_patch'
-require 'redmine_more_filters/patches/info_patch'
-require 'redmine_more_filters/patches/gantt_patch'
-require 'redmine_more_filters/patches/gantts_controller_patch'
+
 
