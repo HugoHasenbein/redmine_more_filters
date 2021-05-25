@@ -68,6 +68,8 @@
 #       - added next three months for date queries
 #       - added localizations: es, fr, ru, pt
 #
+# 1.4.4
+#       - added missing translation for "root"
 #
 require 'redmine'
 
@@ -75,7 +77,7 @@ Redmine::Plugin.register :redmine_more_filters do
   name 'Redmine More Filters'
   author 'Stephan Wenzel'
   description 'Plugin to add necessary filters to queries'
-  version '1.4.3'
+  version '1.4.4'
   url 'https://github.com/HugoHasenbein/redmine_more_filters'
   author_url 'https://github.com/HugoHasenbein/redmine_more_filters'
 
