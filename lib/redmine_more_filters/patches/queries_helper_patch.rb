@@ -64,7 +64,7 @@ module RedmineMoreFilters
               group = :label_relations
             elsif field_options[:type] == :tree
               group = query.is_a?(IssueQuery) ? :label_relations : nil
-            elsif field =~ /root_id|all_relations/ 
+            elsif field =~ /root_id|all_relations|descendant_of/ 
               group = :label_relations
             elsif field =~ /^cf_\d+\./
               group = (field_options[:through] || field_options[:field]).try(:name)

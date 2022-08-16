@@ -72,4 +72,6 @@ en:
   
   label_all_relations:                                "All related to"
 
+  label_descendant_of:                                "Descendant of"
+
   field_root:                                         "Root"
