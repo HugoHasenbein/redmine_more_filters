@@ -72,6 +72,12 @@ module RedmineMoreFilters
             :type  => :integer, 
             :label => :label_all_relations
             
+
+          add_available_filter("descendant_of",
+            :type => :integer,
+            :label => :label_descendant_of
+          )
+
           add_available_filter("created_on_by_clock_time",
             :type => :time_past
           )
@@ -208,6 +214,11 @@ module RedmineMoreFilters
             sqls = [sql, sql_for_all_relations_field(field, operator, value, :reverse => true)]
             sql = sqls.join(["="].include?(operator) ? " OR " : " AND ")
           end
+          "(#{sql})"
+        end
+
+        def sql_for_descendant_of_field(field, operator, value)
+          sql = "#{Issue.table_name}.id IN ( SELECT DISTINCT i.id FROM #{Issue.table_name} i INNER JOIN #{Issue.table_name} j ON i.root_id = j.root_id AND i.lft > j.lft AND i.rgt < j.rgt WHERE #{sql_for_field("id", "=", value, "j", "id")} )"
           "(#{sql})"
         end
         
